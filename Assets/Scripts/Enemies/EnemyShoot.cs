@@ -24,10 +24,6 @@ public class EnemyShoot : MonoBehaviour
     }
 
     private void Update() {
-        Debug.Log("isMagazineEmpty: " + isMagazineEmpty);
-        Debug.Log("isReloading: " + isReloading);
-        Debug.Log("isShootingInCD: " + isShootingInCD);
-
         // If the magazine is empty and it's not reloading
         // start the reload routine
         if (isMagazineEmpty && !isReloading) {
@@ -38,7 +34,6 @@ public class EnemyShoot : MonoBehaviour
         // If the shoot is in cooldown or it's reloading its magazine
         // don't do anything
         if (!isShootingInCD && !isReloading && !isMagazineEmpty) {
-            Debug.Log("SHOOT!");
             Shoot();
             return;
         };
