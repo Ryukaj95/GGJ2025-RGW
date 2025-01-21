@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyShoot : MonoBehaviour
 {
     [SerializeField] private int bulletDamage = 1;
-    [SerializeField] private int firedBulletsPerSeconds = 1;
+    [SerializeField] private int firedBulletsPerSeconds = 3;
     [SerializeField] private int magazineSize = 6;
     [SerializeField] private float reloadTimeInSeconds = 3f;
 
@@ -51,7 +51,7 @@ public class EnemyShoot : MonoBehaviour
 
     private IEnumerator ShootCDRoutine() {
         isShootingInCD = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f / firedBulletsPerSeconds);
         isShootingInCD = false;
     }
 
