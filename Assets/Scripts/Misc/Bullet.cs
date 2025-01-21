@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private bool isFriendly = true;
-    
-    [SerializeField] private float bulletSpeed = 0.25f;
+    [SerializeField] private bool isFriendlyToPlayer = true;
+    [SerializeField] private float bulletSpeed = 4f;
 
     [System.Serializable]
     private class Boost {
@@ -22,18 +21,16 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Boost boostSettings;
 
 
-    Rigidbody2D rb;
-    UnityEngine.Vector2 movementDirection;
+    private Rigidbody2D rb;
+    private Vector2 movementDirection;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start() {
-        movementDirection = PlayerController.Instance.transform.position - this.transform.position;
-
         if (boostSettings.DoesBoost) {
-            StartCoroutine(IncreaseSpeedAfterSeconds(boostSettings.BulletSpeedAfterBoost, boostSettings.SpeedAfterSeconds));
+            StartCoroutine(ChangeSpeedAfterSeconds(boostSettings.BulletSpeedAfterBoost, boostSettings.SpeedAfterSeconds));
         }
     }
 
@@ -42,14 +39,12 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("colliding: ", other);
-
-        if (isFriendly && other.gameObject.GetComponent<Enemy>()) {
+        if (isFriendlyToPlayer && other.gameObject.GetComponent<Enemy>()) {
             Destroy(this.gameObject);
             return;
         }
 
-        if (!isFriendly && other.gameObject.GetComponent<PlayerController>()) {
+        if (!isFriendlyToPlayer && other.gameObject.GetComponent<PlayerController>()) {
             Destroy(this.gameObject);
             return;
         }
@@ -59,8 +54,24 @@ public class Bullet : MonoBehaviour
         rb.MovePosition(rb.position + movementDirection * (bulletSpeed * Time.fixedDeltaTime));
     }
 
-    private IEnumerator IncreaseSpeedAfterSeconds(float speed, float seconds) {
+    private IEnumerator ChangeSpeedAfterSeconds(float speed, float seconds) {
         yield return new WaitForSeconds(seconds);
+        bulletSpeed = speed;
+    }
+
+    public void SetTarget(Vector2 target) {
+        movementDirection = (target - new Vector2(this.transform.position.x, this.transform.position.y)).normalized;
+    }
+
+    public void SetDirection(Vector2 direction) {
+        movementDirection = direction.normalized;
+    }
+
+    public void SetIsFriendlyToPlayer(bool value) {
+        isFriendlyToPlayer = value;
+    }
+
+    public void SetSpeed(float speed) {
         bulletSpeed = speed;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 210167995220660486}
   - component: {fileID: 5646233081120712887}
   - component: {fileID: 2930183305157705346}
+  - component: {fileID: 8949867962488592547}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd38540492cd733428e66b54fb5768f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFriendlyToPlayer: 1
   bulletSpeed: 1
   boostSettings:
     doesBoost: 0
@@ -196,3 +198,15 @@ PolygonCollider2D:
       - {x: 0.29296875, y: 0.40234375}
       - {x: 0.15234375, y: 0.47265625}
   m_UseDelaunayMesh: 0
+--- !u!114 &8949867962488592547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5311418314154270319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c030383ec1a9c4b8c00e148f806d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
