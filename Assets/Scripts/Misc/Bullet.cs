@@ -1,9 +1,10 @@
 using System.Collections;
-using System.Numerics;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private bool isFriendly = true;
+    
     [SerializeField] private float bulletSpeed = 0.25f;
 
     [System.Serializable]
@@ -38,6 +39,20 @@ public class Bullet : MonoBehaviour
 
     private void Update() {
         Move();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("colliding: ", other);
+
+        if (isFriendly && other.gameObject.GetComponent<Enemy>()) {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        if (!isFriendly && other.gameObject.GetComponent<PlayerController>()) {
+            Destroy(this.gameObject);
+            return;
+        }
     }
 
     private void Move() {
