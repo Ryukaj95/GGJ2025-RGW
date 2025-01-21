@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &62974584 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1356642214034752569, guid: 838150341aa760345afac8e545da46e9, type: 3}
+  m_PrefabInstance: {fileID: 7383835085647084745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +264,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &573815628 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8672352732848204547, guid: 838150341aa760345afac8e545da46e9, type: 3}
+  m_PrefabInstance: {fileID: 7383835085647084745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +530,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1886445972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7176975716645645101, guid: 838150341aa760345afac8e545da46e9, type: 3}
+  m_PrefabInstance: {fileID: 7383835085647084745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4430535662772575703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -630,9 +645,21 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6110924713198351600, guid: 838150341aa760345afac8e545da46e9, type: 3}
-      propertyPath: firedBulletsPerSeconds
-      value: 4
+      propertyPath: spawnPoints.Array.size
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6110924713198351600, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 62974584}
+    - target: {fileID: 6110924713198351600, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: spawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 573815628}
+    - target: {fileID: 6110924713198351600, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: spawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1886445972}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
