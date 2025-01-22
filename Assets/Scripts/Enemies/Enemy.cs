@@ -10,17 +10,17 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         enemyPathing = GetComponent<Pathing>();
+        endPosition = enemyPathing.GetCurrentPosition();
     }
 
     private void Update()
     {
-        if (endPosition != null)
+        if (this.transform.position.Equals(endPosition))
         {
-            if (this.transform.position.Equals(endPosition))
-            {
-                endPosition = enemyPathing.GetNextPosition();
-            }
+            endPosition = enemyPathing.GetNextPosition();
+        }
 
+        if (enemyPathing.CanMove()) {
             UpdateMovement();
         }
     }
