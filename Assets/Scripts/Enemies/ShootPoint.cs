@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShootPoint : MonoBehaviour
 {
@@ -8,13 +9,25 @@ public class ShootPoint : MonoBehaviour
 
     private float bulletSpeed = 4f;
 
-    public void Shoot(Vector2 target) {
+    public void ShootToTarget(Vector2 target) {
         if (!bulletPrefab) return;
 
-        Bullet bullet = Instantiate(bulletPrefab, this.gameObject.transform.position, Quaternion.identity);
+        Bullet bullet = CreateBullet();
         bullet.SetTarget(target);
-        //bullet.SetDirection(new Vector2(1, 0));
+    }
+
+    public void ShootToDirection(Vector2 target) {
+        if (!bulletPrefab) return;
+
+        Bullet bullet = CreateBullet();
+        bullet.SetDirection(target);
+    }
+
+    public Bullet CreateBullet() {
+        Bullet bullet = Instantiate(bulletPrefab, this.gameObject.transform.position, Quaternion.identity);
         bullet.SetIsFriendlyToPlayer(false);
         bullet.SetSpeed(bulletSpeed);
+
+        return bullet;
     }
 }
