@@ -2,25 +2,29 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Vector2 endPosition;
+    private Vector2 endPosition;
     [SerializeField] private float speed = 1f;
+
+    private Vector2 startingPosition;
 
     private Pathing enemyPathing;
 
     private void Awake()
     {
         enemyPathing = GetComponent<Pathing>();
-        endPosition = enemyPathing.GetCurrentPosition();
+        startingPosition = new Vector2(this.transform.position.x, this.transform.position.y);
+        endPosition = startingPosition + enemyPathing.GetCurrentPosition();
     }
 
     private void Update()
     {
         if (this.transform.position.Equals(endPosition))
         {
-            endPosition = enemyPathing.GetNextPosition();
+            endPosition = endPosition + enemyPathing.GetNextPosition();
         }
 
-        if (enemyPathing.CanMove()) {
+        if (enemyPathing.CanMove())
+        {
             UpdateMovement();
         }
     }
