@@ -17,16 +17,11 @@ public class Pathing : MonoBehaviour
         public Vector2 relativeVector;
 
         [SerializeField]
-        public int stepTime;
-
-        [SerializeField]
-        public float arcHeight;
+        public float stepTime;
 
     }
 
     private bool canMove = true;
-
-    private float progress = 0f;
 
     private Step currentStep => steps[indexPosition];
 
@@ -47,16 +42,6 @@ public class Pathing : MonoBehaviour
         return currentStep.relativeVector;
     }
 
-    public void advanceStep(float add, Vector2 endPosition)
-    {
-        progress += add / Vector2.Distance(transform.position, endPosition);
-    }
-
-    public void newStep()
-    {
-        progress = 0f;
-    }
-
     public Vector2 GetCurrentPosition()
     {
         return currentStep.relativeVector;
@@ -67,7 +52,7 @@ public class Pathing : MonoBehaviour
         return canMove;
     }
 
-    private IEnumerator WaitForStepPause(int stepTime)
+    private IEnumerator WaitForStepPause(float stepTime)
     {
         canMove = false;
         yield return new WaitForSeconds(stepTime);
