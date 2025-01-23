@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private const string id = "";
-
-    public string bulletId => id;
+    [SerializeField] public string bulletId = ""; // UUID
     [SerializeField] private bool isFriendlyToPlayer = true;
 
 
@@ -150,7 +148,7 @@ public class Bullet : MonoBehaviour
     {
         if (!isFriendlyToPlayer)
         {
-            BulletsManager.RemoveBulletFromList(id);
+            BulletsManager.RemoveBulletFromList(bulletId);
         }
     }
 }

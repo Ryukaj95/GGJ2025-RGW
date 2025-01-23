@@ -8,8 +8,6 @@ public class BulletsManager : Singleton<BulletsManager>
 {
     // Il sistema di proiettili deve permettere:
 
-    public static readonly BulletsManager Instance = new BulletsManager();
-
     public static List<Bullet> enemyBulletsOnScreen = new List<Bullet>();
 
     // Creare i proiettili nel BulletManager

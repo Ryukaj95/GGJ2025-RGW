@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class EnemyShoot : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     [SerializeField] private int bulletDamage = 1;  // Da spostare sui proiettili
     [SerializeField] private int firedBulletsPerSeconds = 3;
