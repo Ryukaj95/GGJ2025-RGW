@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,10 +8,12 @@ public class Bullet : MonoBehaviour
 
     public string bulletId => id;
     [SerializeField] private bool isFriendlyToPlayer = true;
+
+
     [SerializeField] private float bulletSpeed = 4f;
 
     [System.Serializable]
-    private class Boost
+    public class Boost
     {
         [SerializeField] private bool doesBoost = false;
         public bool DoesBoost => doesBoost;
@@ -18,13 +21,24 @@ public class Bullet : MonoBehaviour
         [SerializeField] private float bulletSpeedAfterBoost = 4f;
         public float BulletSpeedAfterBoost => doesBoost ? bulletSpeedAfterBoost : 0f;
 
-        [SerializeField] private float speedAfterSeconds = 0;
-        public float SpeedAfterSeconds => doesBoost ? speedAfterSeconds : 0f;
+        [SerializeField] private float accelaration = 0f; // When 0, it's instant
+
+        public float accelerationSpeed => doesBoost ? accelaration : 0f;
+
+        [SerializeField] private float countdown = 0;
+        public float Countdown => doesBoost ? countdown : 0f;
+
+        public void SetBoost(float speed, float accel, float wait)
+        {
+            doesBoost = true;
+            bulletSpeedAfterBoost = speed;
+            accelaration = accel;
+            countdown = wait;
+        }
     }
 
-    [SerializeField] private Boost boostSettings;
-
-
+    [SerializeField] public Boost boostSettings;
+    private bool decelerate = false;
     private Rigidbody2D rb;
     private Vector2 movementDirection;
 
@@ -37,13 +51,36 @@ public class Bullet : MonoBehaviour
     {
         if (boostSettings.DoesBoost)
         {
-            StartCoroutine(ChangeSpeedAfterSeconds(boostSettings.BulletSpeedAfterBoost, boostSettings.SpeedAfterSeconds));
+            StartCoroutine(ChangeSpeedAfterSeconds(boostSettings.BulletSpeedAfterBoost, boostSettings.Countdown));
         }
     }
 
     private void Update()
     {
+        if (decelerate)
+        {
+            Debug.Log("ACCELERATION");
+            if (boostSettings.accelerationSpeed > 0)
+            {
+                bulletSpeed = bulletSpeed + (boostSettings.accelerationSpeed * Time.fixedDeltaTime);
+                if (bulletSpeed >= boostSettings.BulletSpeedAfterBoost)
+                {
+                    decelerate = false;
+                    bulletSpeed = boostSettings.BulletSpeedAfterBoost;
+                }
+            }
+            else
+            {
+                bulletSpeed = bulletSpeed - Math.Abs(boostSettings.accelerationSpeed * Time.fixedDeltaTime);
+                if (bulletSpeed <= boostSettings.BulletSpeedAfterBoost)
+                {
+                    decelerate = false;
+                    bulletSpeed = boostSettings.BulletSpeedAfterBoost;
+                }
+            }
+        }
         Move();
+        Rotate();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,10 +103,22 @@ public class Bullet : MonoBehaviour
         rb.MovePosition(rb.position + movementDirection * (bulletSpeed * Time.fixedDeltaTime));
     }
 
+    private void Rotate()
+    {
+        float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+
+        // Imposta la rotazione del proiettile
+        rb.rotation = angle - 90;
+    }
+
     private IEnumerator ChangeSpeedAfterSeconds(float speed, float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        bulletSpeed = speed;
+        if (this.boostSettings.accelerationSpeed == 0)
+        {
+            bulletSpeed = speed;
+        }
+        else decelerate = true;
     }
 
     public void SetTarget(Vector2 target)
@@ -90,6 +139,11 @@ public class Bullet : MonoBehaviour
     public void SetSpeed(float speed)
     {
         bulletSpeed = speed;
+    }
+
+    public float GetSpeed()
+    {
+        return bulletSpeed;
     }
 
     public void OnDestroy()

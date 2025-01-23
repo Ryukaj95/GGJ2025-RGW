@@ -156,8 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122d415d26a468a4d9334f21a0b5db49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPosition: {x: 0, y: 0}
-  speed: 1
+  speed: 5
 --- !u!114 &6110924713198351600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +173,8 @@ MonoBehaviour:
   firedBulletsPerSeconds: 5
   magazineSize: 24
   reloadTimeInSeconds: 1
+  bulletPrefab: {fileID: 210167995220660486, guid: 674d1f6cc932ead45a387e38a6d20ed5, type: 3}
+  isFriendlyToPlayer: 0
   spawnPoints:
   - {fileID: 1356642214034752569}
   - {fileID: 8672352732848204547}
@@ -195,17 +196,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c910d251a750e74a9b81c9758ad1314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positions:
-  - position: {x: -10, y: -10}
-    stepTime: 2
-  - position: {x: -4, y: -5}
-    stepTime: 1
-  - position: {x: -5, y: -4}
-    stepTime: 2
-  - position: {x: -6, y: -6}
+  steps:
+  - position: {x: -1, y: 1.5}
     stepTime: 0
-  - position: {x: -10, y: -10}
+    isAbsolute: 0
+  - position: {x: 1, y: 1.5}
     stepTime: 0
+    isAbsolute: 0
+  - position: {x: 3, y: 0}
+    stepTime: 0
+    isAbsolute: 0
+  - position: {x: 0, y: -3}
+    stepTime: 0
+    isAbsolute: 0
+  - position: {x: -3, y: 0}
+    stepTime: 0
+    isAbsolute: 0
   indexPosition: 0
 --- !u!114 &4541765904015175727
 MonoBehaviour:
@@ -296,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 6349717933997365951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: -0.47, z: 0}
+  m_LocalPosition: {x: 0.433, y: -0.271, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -15,12 +15,13 @@ public class BulletsManager : Singleton<BulletsManager>
     // Creare i proiettili nel BulletManager
     // BulletManager.Instance.CreateEnemyBullet() -> Crea proiettile, popola con i parametri passati (prefabProiettile, posizione, direction, speed)
     // BulletManager.Instance.CreateFriendlyBullet()
-    public static void CreateEnemyBullet(Vector2 spawnPoint, Vector2 direction, Bullet bullet)
+    public static Bullet CreateEnemyBullet(Vector2 spawnPoint, Vector2 direction, Bullet bullet)
     {
         Bullet newBullet = Instantiate(bullet, spawnPoint, Quaternion.identity);
-        bullet.SetDirection(direction);
-        bullet.SetIsFriendlyToPlayer(false);
+        newBullet.SetDirection(direction);
+        newBullet.SetIsFriendlyToPlayer(false);
         enemyBulletsOnScreen.Add(newBullet);
+        return newBullet;
     }
     public void CreateFriendlyBullet() { }
 

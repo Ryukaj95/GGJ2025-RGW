@@ -22,10 +22,12 @@ public class EnemyShoot : MonoBehaviour
     private class BulletSpreadSettings
     {
         [SerializeField] public bool isActive = false;
-
         [SerializeField] public float angleSpread = 360f;
         [SerializeField] public int bulletsPerSpread = 36;
-        [SerializeField] public float firerate = 1f;
+        [SerializeField] public float cooldown = 1f;
+        [SerializeField] public float radius = 1f;
+
+        [SerializeField] public float wait = 0f;
     }
 
     [SerializeField] private BulletSpreadSettings bulletSpreadSettings;
@@ -94,11 +96,21 @@ public class EnemyShoot : MonoBehaviour
 
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 
-            // shootPoints[0].ShootToDirection(direction);
-            BulletsManager.CreateEnemyBullet(spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position, direction, bulletPrefab);
+            Vector2 spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position;
+
+            Vector2 startPos = spawnPoint + (direction.normalized * bulletSpreadSettings.radius);
+
+
+            Bullet bullet = BulletsManager.CreateEnemyBullet(startPos, direction, bulletPrefab);
+            if (bulletSpreadSettings.wait > 0)
+            {
+                float pastSpeed = bullet.GetSpeed();
+                bullet.SetSpeed(0);
+                bullet.boostSettings.SetBoost(pastSpeed, 0f, bulletSpreadSettings.wait);
+            }
         }
 
-        yield return new WaitForSeconds(bulletSpreadSettings.firerate);
+        yield return new WaitForSeconds(bulletSpreadSettings.cooldown);
         isShootingInCD = false;
     }
 
