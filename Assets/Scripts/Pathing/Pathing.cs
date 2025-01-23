@@ -14,10 +14,13 @@ public class Pathing : MonoBehaviour
     private class Step
     {
         [SerializeField]
-        public Vector2 relativeVector;
+        public Vector2 position;
 
         [SerializeField]
         public float stepTime;
+
+        [SerializeField]
+        public bool isAbsolute;
 
     }
 
@@ -27,7 +30,7 @@ public class Pathing : MonoBehaviour
 
     public Vector2 GetStartingPosition()
     {
-        return steps.Length > 0 ? steps[0].relativeVector : new Vector2(0, 0);
+        return steps.Length > 0 ? steps[0].position : new Vector2(0, 0);
     }
 
     public Vector2 GetNextPosition()
@@ -39,12 +42,14 @@ public class Pathing : MonoBehaviour
 
         indexPosition = (indexPosition + 1) % steps.Length;
 
-        return currentStep.relativeVector;
+        Vector2 startPos = this.transform.position;
+
+        return currentStep.isAbsolute ? currentStep.position : startPos + currentStep.position;
     }
 
     public Vector2 GetCurrentPosition()
     {
-        return currentStep.relativeVector;
+        return currentStep.position;
     }
 
     public bool CanMove()

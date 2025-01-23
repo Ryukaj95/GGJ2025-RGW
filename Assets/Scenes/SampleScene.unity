@@ -1061,6 +1061,10 @@ PrefabInstance:
       value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8424490614119449058, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: steps.Array.data[3].isAbsolute
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424490614119449058, guid: 838150341aa760345afac8e545da46e9, type: 3}
       propertyPath: steps.Array.data[3].movement.x
       value: -3
       objectReference: {fileID: 0}
@@ -1110,7 +1114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8424490614119449058, guid: 838150341aa760345afac8e545da46e9, type: 3}
       propertyPath: steps.Array.data[3].relativeVector.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8424490614119449058, guid: 838150341aa760345afac8e545da46e9, type: 3}
       propertyPath: relativePositions.Array.data[0].stepTime
@@ -1155,6 +1159,14 @@ PrefabInstance:
     - target: {fileID: 8424490614119449058, guid: 838150341aa760345afac8e545da46e9, type: 3}
       propertyPath: relativePositions.Array.data[3].position.y
       value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672352732848204547, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.433
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672352732848204547, guid: 838150341aa760345afac8e545da46e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.271
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6627389789565080936, guid: 838150341aa760345afac8e545da46e9, type: 3}

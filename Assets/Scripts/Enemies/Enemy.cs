@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     {
         if (this.transform.position.Equals(endPosition))
         {
-            endPosition = endPosition + enemyPathing.GetNextPosition();
+            endPosition = enemyPathing.GetNextPosition();
         }
 
         if (enemyPathing.CanMove())
