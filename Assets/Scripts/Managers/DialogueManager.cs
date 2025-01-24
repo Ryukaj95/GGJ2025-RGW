@@ -16,6 +16,11 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] private float textSpeed = 0.3f;
     [SerializeField] private float textFinishWaitTime = 1f;
 
+    [SerializeField] private GameObject dialogueCanvas;
+
+    private bool isReady => dialogueCanvas.activeSelf;
+    private bool canStartDialogue => isReady && !isSpeaking && dialogues.Count > 0;
+
     public bool isWaitingForContinue = false;
 
     private Color emptyColor = new Color(1, 1, 1, 0);
@@ -33,7 +38,7 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     private void Update() {
-        if (!isSpeaking && dialogues.Count > 0) {
+        if (canStartDialogue) {
             StartCoroutine(StartDialogueRoutine());
         }
     }
@@ -42,7 +47,7 @@ public class DialogueManager : Singleton<DialogueManager>
         Image imageInScene = GetImage(position);
 
         if (!imageInScene) return;
-        
+
         Sprite sprite = Sprite.Create(
             sourceImage,
             new Rect(0, 0, sourceImage.width, sourceImage.height),
@@ -67,8 +72,29 @@ public class DialogueManager : Singleton<DialogueManager>
         SetImageToBackground(position == 1 ? 2 : 1);
     }
 
-    public void AddDialogue(string character, string text, int position) {
+    public void Add(string character, string text, int position) {
+        if (!isReady) return;
+
         dialogues.Add(new Dialogue(character, text, position));
+    }
+
+    public void Add(Dialogue dialogue) {
+        if (!isReady) return;
+
+        dialogues.Add(dialogue);
+    }
+ 
+    public void Show() {
+        Debug.Log("Showing dialogue");
+        dialogueCanvas.SetActive(true);
+    }
+
+    public void Hide() {
+        if (!dialogueCanvas) return;
+
+        Debug.Log("Hiding dialogue");
+        dialogues.Clear();
+        dialogueCanvas.SetActive(false);
     }
 
     private void SetSpeakingName(string charName) {
@@ -107,13 +133,11 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    private IEnumerator SpeakRoutine(string text)
-{
+    private IEnumerator SpeakRoutine(string text) {
     ClearDialogue();
     dialogueText.pageToDisplay = 1;
 
-    foreach (char letter in text)
-    {
+    foreach (char letter in text) {
         dialogueText.text += letter;
         dialogueText.ForceMeshUpdate();
 
@@ -155,7 +179,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         SetSpeakingImg(dialogue.position);
         SetSpeakingName(dialogue.characterName);
-        
+
         yield return StartCoroutine(SpeakRoutine(dialogue.dialogueText));
         // yield return new WaitForSeconds(textFinishWaitTime);
     }
@@ -163,15 +187,19 @@ public class DialogueManager : Singleton<DialogueManager>
     private IEnumerator TestAddDialoguesAfterSecRoutine() {
         yield return new WaitForSeconds(0.5f);
 
-        AddDialogue("Shad", "You can't save her!", 2);
-        AddDialogue("Dash", "I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad!", 1);
-        AddDialogue("Shad", "No, you won't. MWUAHAHAHAHAHAHAHAHAH", 2);
-        AddDialogue("Dash", "... stupid", 1);
+        Add("Shad", "You can't save her!", 2);
+        Add("Dash", "I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad!", 1);
+        Add("Shad", "No, you won't. MWUAHAHAHAHAHAHAHAHAH", 2);
+        Add("Dash", "... stupid", 1);
 
         yield return new WaitForSeconds(0.5f);
-        AddDialogue("Colonel", "I will help you", 2);
+        Add("Colonel", "I will help you", 2);
 
         yield return new WaitForSeconds(0.5f);
-        AddDialogue("Lotus", "Guys... I'm already safe", 1);
+        Add("Lotus", "Guys... I'm already safe", 1);
+    }
+
+    public IEnumerator WaitForDialogueToFinish() {
+        yield return new WaitUntil(() => !isSpeaking && dialogues.Count == 0);
     }
 }
