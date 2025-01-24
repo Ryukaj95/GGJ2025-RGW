@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +9,9 @@ public class DialogueManager : Singleton<DialogueManager>
 {
     [SerializeField] private GameObject positionImageOne;
     [SerializeField] private GameObject positionImageTwo;
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private GameObject namePanel;
 
-    [SerializeField] private TMP_Text dialogueText;
-    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI nameText;
 
     [SerializeField] private float textSpeed = 0.3f;
     [SerializeField] private float textFinishWaitTime = 1f;
@@ -45,7 +41,7 @@ public class DialogueManager : Singleton<DialogueManager>
     protected override void Awake() {
         base.Awake();
 
-        // StartCoroutine(TestAddDialoguesAfterSecRoutine());
+        StartCoroutine(TestAddDialoguesAfterSecRoutine());
     }
 
     private void Update() {
@@ -129,13 +125,42 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    private IEnumerator SpeakRoutine(string text) {
+    private IEnumerator _SpeakRoutine(string text) {
         yield return null;
         foreach (char letter in text) {
             dialogueText.text = dialogueText.text + letter;
             yield return new WaitForSeconds(textSpeed / 10);
         }
     }
+
+    private IEnumerator SpeakRoutine(string text)
+{
+    ClearDialogue();
+    dialogueText.pageToDisplay = 1;
+
+    foreach (char letter in text)
+    {
+        dialogueText.text += letter;
+        dialogueText.ForceMeshUpdate();
+
+        Debug.Log(dialogueText.pageToDisplay);
+        Debug.Log(dialogueText.textInfo.pageCount);
+
+        // Check if the current page is full
+        if (dialogueText.pageToDisplay < dialogueText.textInfo.pageCount)
+        {
+            // Wait for the user to click before proceeding to the next page
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            dialogueText.pageToDisplay++;
+        }
+
+        yield return new WaitForSeconds(textSpeed / 10);
+    }
+
+    // Final wait for user input to confirm the end of the dialogue
+    yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+}
+
 
     private IEnumerator StartDialogueRoutine() {
         isSpeaking = true;
@@ -158,7 +183,7 @@ public class DialogueManager : Singleton<DialogueManager>
         SetSpeakingName(dialogue.characterName);
         
         yield return StartCoroutine(SpeakRoutine(dialogue.dialogueText));
-        yield return new WaitForSeconds(textFinishWaitTime);
+        // yield return new WaitForSeconds(textFinishWaitTime);
     }
 
     private IEnumerator TestAddDialoguesAfterSecRoutine() {
@@ -171,5 +196,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         yield return new WaitForSeconds(0.5f);
         AddDialogue("Colonel", "I will help you", 2);
+
+        yield return new WaitForSeconds(0.5f);
+        AddDialogue("Lotus", "Guys... I'm already safe", 1);
     }
 }
