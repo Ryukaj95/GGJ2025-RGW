@@ -16,6 +16,8 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] private float textSpeed = 0.3f;
     [SerializeField] private float textFinishWaitTime = 1f;
 
+    public bool isWaitingForContinue = false;
+
     private Color emptyColor = new Color(1, 1, 1, 0);
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color backgroundColor = new Color(0.6f, 0.6f, 0.6f, 1);
@@ -52,8 +54,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void ShowImage(Texture2D sourceImage, int position) {
         Image imageInScene = GetImage(position);
-
-        Debug.Log(imageInScene);
 
         if (!imageInScene) return;
         
@@ -125,14 +125,6 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    private IEnumerator _SpeakRoutine(string text) {
-        yield return null;
-        foreach (char letter in text) {
-            dialogueText.text = dialogueText.text + letter;
-            yield return new WaitForSeconds(textSpeed / 10);
-        }
-    }
-
     private IEnumerator SpeakRoutine(string text)
 {
     ClearDialogue();
@@ -143,14 +135,13 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueText.text += letter;
         dialogueText.ForceMeshUpdate();
 
-        Debug.Log(dialogueText.pageToDisplay);
-        Debug.Log(dialogueText.textInfo.pageCount);
-
         // Check if the current page is full
         if (dialogueText.pageToDisplay < dialogueText.textInfo.pageCount)
         {
             // Wait for the user to click before proceeding to the next page
+            isWaitingForContinue = true;
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            isWaitingForContinue = false;
             dialogueText.pageToDisplay++;
         }
 
@@ -158,9 +149,10 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     // Final wait for user input to confirm the end of the dialogue
+    isWaitingForContinue = true;
     yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+    isWaitingForContinue = false;
 }
-
 
     private IEnumerator StartDialogueRoutine() {
         isSpeaking = true;
