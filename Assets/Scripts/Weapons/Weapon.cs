@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private int bulletDamage = 1;  // Da spostare sui proiettili
     [SerializeField] private int firedBulletsPerSeconds = 3;
     [SerializeField] private int magazineSize = 7;
     [SerializeField] private float reloadTimeInSeconds = 3f;
@@ -19,7 +18,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
 
     [System.Serializable]
-    private class BulletSpreadSettings
+    private class BulletSpreadSettings // Da fare Scriptable Objects
     {
         [SerializeField] public bool isActive = false;
         [SerializeField] public float angleSpread = 360f;
@@ -39,6 +38,8 @@ public class Weapon : MonoBehaviour
 
     private bool isShootingInCD, isReloading = false;
 
+    public bool playerTrigger = false;
+
     private void Awake()
     {
         currentBulletsInMagazine = magazineSize;
@@ -46,22 +47,22 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        // If the magazine is empty and it's not reloading
-        // start the reload routine
         if (isMagazineEmpty && !isReloading)
         {
             StartCoroutine(ReloadRoutine());
             return;
         }
-
-        // If the shoot is in cooldown or it's reloading its magazine
-        // don't do anything
-        if (!isShootingInCD && !isReloading && !isMagazineEmpty)
+        if (!isFriendlyToPlayer || playerTrigger)
         {
-            Shoot();
-            return;
+            // If the shoot is in cooldown or it's reloading its magazine
+            // don't do anything
+            if (!isShootingInCD && !isReloading && !isMagazineEmpty)
+            {
+                Shoot();
+                return;
+            }
         }
-        ;
+
     }
 
     private void Shoot()
@@ -83,9 +84,9 @@ public class Weapon : MonoBehaviour
     {
         isShootingInCD = true;
 
-        Vector2 directionToPlayer = (shootTarget.transform.position - transform.position).normalized;
+        Vector2 bulletDirection = GetBulletDirection(shootTarget.transform);
 
-        float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+        float baseAngle = Mathf.Atan2(bulletDirection.y, bulletDirection.x) * Mathf.Rad2Deg;
         float angleStep = bulletSpreadSettings.angleSpread / bulletSpreadSettings.bulletsPerSpread;
 
         float startAngle = baseAngle - (angleStep * (bulletSpreadSettings.bulletsPerSpread - 1) / 2);
@@ -101,7 +102,7 @@ public class Weapon : MonoBehaviour
             Vector2 startPos = spawnPoint + (direction.normalized * bulletSpreadSettings.radius);
 
 
-            Bullet bullet = BulletsManager.CreateEnemyBullet(startPos, direction, bulletPrefab);
+            Bullet bullet = BulletsManager.Instance.ShootBullet(startPos, direction, bulletPrefab, isFriendlyToPlayer);
             if (bulletSpreadSettings.wait > 0)
             {
                 float pastSpeed = bullet.GetSpeed();
@@ -114,15 +115,27 @@ public class Weapon : MonoBehaviour
         isShootingInCD = false;
     }
 
+    private Vector2 GetBulletDirection(Transform playerTransform)
+    {
+        if (!isFriendlyToPlayer)
+        {
+            return (playerTransform.position - transform.position).normalized;
+        }
+        else
+        {
+            return Vector2.up;
+        }
+    }
+
     private IEnumerator ShootRoutine()
     {
         isShootingInCD = true;
 
         Vector3 playerPos = PlayerController.Instance.gameObject.transform.position;
         Vector2 source = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position;
-        Vector2 direction = (new Vector2(playerPos.x, playerPos.y) - source).normalized;
+        Vector2 direction = !isFriendlyToPlayer ? (new Vector2(playerPos.x, playerPos.y) - source).normalized : Vector2.up;
 
-        BulletsManager.CreateEnemyBullet(source, direction, bulletPrefab);
+        BulletsManager.Instance.ShootBullet(source, direction, bulletPrefab, isFriendlyToPlayer);
         currentBulletsInMagazine -= 1;
 
         yield return new WaitForSeconds(1f / firedBulletsPerSeconds);

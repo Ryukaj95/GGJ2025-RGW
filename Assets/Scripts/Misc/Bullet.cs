@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public string bulletId = ""; // UUID
     [SerializeField] private bool isFriendlyToPlayer = true;
 
-
+    [SerializeField] private int damage = 1;
     [SerializeField] private float bulletSpeed = 4f;
 
     [System.Serializable]
@@ -83,14 +83,17 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (isFriendlyToPlayer && other.gameObject.GetComponent<Enemy>())
         {
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(this.gameObject);
             return;
         }
 
         if (!isFriendlyToPlayer && other.gameObject.GetComponent<PlayerController>())
         {
+            other.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
             Destroy(this.gameObject);
             return;
         }
@@ -148,7 +151,7 @@ public class Bullet : MonoBehaviour
     {
         if (!isFriendlyToPlayer)
         {
-            BulletsManager.RemoveBulletFromList(bulletId);
+            BulletsManager.Instance.RemoveBulletFromList(bulletId);
         }
     }
 }

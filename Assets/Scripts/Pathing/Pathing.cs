@@ -57,6 +57,11 @@ public class Pathing : MonoBehaviour
         return canMove;
     }
 
+    public void SetMove(bool move)
+    {
+        canMove = move;
+    }
+
     private IEnumerator WaitForStepPause(float stepTime)
     {
         canMove = false;
