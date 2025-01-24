@@ -24,20 +24,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private bool isSpeaking = false;
 
-    private class Dialogue {
-        public string imageResourcePath;
-        public string characterName;
-        public string dialogueText;
-        public int position;
-
-        public Dialogue(string cN, string d, int p, string iRP) {
-            this.characterName = cN;
-            this.dialogueText = d;
-            this.position = p;
-            this.imageResourcePath = iRP;
-        }
-    }
-
     private List<Dialogue> dialogues = new List<Dialogue>();
 
     protected override void Awake() {
@@ -82,11 +68,7 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     public void AddDialogue(string character, string text, int position) {
-        dialogues.Add(new Dialogue(character, text, position, "Characters/" + character));
-    }
-
-    public void AddDialogue(string character, string text, int position, string charImageSourcePath) {
-        dialogues.Add(new Dialogue(character, text, position, charImageSourcePath));
+        dialogues.Add(new Dialogue(character, text, position));
     }
 
     private void SetSpeakingName(string charName) {
@@ -161,7 +143,7 @@ public class DialogueManager : Singleton<DialogueManager>
             Dialogue currDialog = dialogues.First();
             dialogues.RemoveAt(0);
 
-            ShowImage(Resources.Load<Texture2D>(currDialog.imageResourcePath), currDialog.position);
+            ShowImage(Resources.Load<Texture2D>("Characters/" + currDialog.characterName), currDialog.position);
             yield return StartCoroutine(SayDialogueRoutine(currDialog));
         }
 
