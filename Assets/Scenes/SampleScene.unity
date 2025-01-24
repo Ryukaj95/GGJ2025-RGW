@@ -336,7 +336,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 100, y: 100}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -381,8 +381,7 @@ RectTransform:
   m_Children:
   - {fileID: 1772607785}
   - {fileID: 1695838344}
-  - {fileID: 1724675209}
-  - {fileID: 830591018}
+  - {fileID: 813440478}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -404,6 +403,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionImageOne: {fileID: 1772607782}
   positionImageTwo: {fileID: 1695838341}
+  dialoguePanel: {fileID: 1724675208}
+  namePanel: {fileID: 830591017}
+  dialogueText: {fileID: 2010582726}
+  nameText: {fileID: 1103584255}
 --- !u!210 &167720237
 SortingGroup:
   m_ObjectHideFlags: 0

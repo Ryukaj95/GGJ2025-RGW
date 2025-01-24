@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +11,46 @@ public class DialogueManager : Singleton<DialogueManager>
 {
     [SerializeField] private GameObject positionImageOne;
     [SerializeField] private GameObject positionImageTwo;
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private GameObject namePanel;
+
+    [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private TMP_Text nameText;
+
+    [SerializeField] private float textSpeed = 0.3f;
+    [SerializeField] private float textFinishWaitTime = 1f;
 
     private Color emptyColor = new Color(1, 1, 1, 0);
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color backgroundColor = new Color(0.6f, 0.6f, 0.6f, 1);
+
+    private bool isSpeaking = false;
+
+    private class Dialogue {
+        public string characterName;
+        public string dialogueText;
+        public int position;
+
+        public Dialogue(string cN, string d, int p) {
+            this.characterName = cN;
+            this.dialogueText = d;
+            this.position = p;
+        }
+    }
+
+    private List<Dialogue> dialogues = new List<Dialogue>();
+
+    protected override void Awake() {
+        base.Awake();
+
+        // StartCoroutine(TestAddDialoguesAfterSecRoutine());
+    }
+
+    private void Update() {
+        if (!isSpeaking && dialogues.Count > 0) {
+            StartCoroutine(StartDialogueRoutine());
+        }
+    }
 
     public void ShowImage(Texture2D sourceImage, int position) {
         Image imageInScene = GetImage(position);
@@ -36,6 +76,35 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = emptyColor;
     }
 
+    public void SetSpeakingImg(int position) {
+        SetImageToFront(position);
+        SetImageToBackground(position == 1 ? 2 : 1);
+    }
+
+    public void AddDialogue(string character, string text, int position) {
+        dialogues.Add(new Dialogue(character, text, position));
+    }
+
+    private void SetSpeakingName(string charName) {
+        nameText.text = charName;
+    }
+
+    private void ClearDialogue() {
+        dialogueText.text = "";
+    }
+
+    private Image GetImage(int position) {
+        if (position != 1 && position != 2) {
+            return null;
+        }
+
+        if (position == 1) {
+            return positionImageOne.GetComponent<Image>();
+        } else {
+            return positionImageTwo.GetComponent<Image>();
+        }
+    }
+
     private void SetImageToBackground(int position) {
         Image imageInScene = GetImage(position);
 
@@ -52,54 +121,48 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    public void Speak(int position) {
-        SetImageToFront(position);
-        SetImageToBackground(position == 1 ? 2 : 1);
-    }
-
-    private Image GetImage(int position) {
-        if (position != 1 && position != 2) {
-            return null;
-        }
-
-        if (position == 1) {
-            return positionImageOne.GetComponent<Image>();
-        } else {
-            return positionImageTwo.GetComponent<Image>();
+    private IEnumerator SpeakRoutine(string text) {
+        yield return null;
+        foreach (char letter in text) {
+            dialogueText.text = dialogueText.text + letter;
+            yield return new WaitForSeconds(textSpeed / 10);
         }
     }
 
-    protected override void Awake() {
-        base.Awake();
+    private IEnumerator StartDialogueRoutine() {
+        isSpeaking = true;
 
-        StartCoroutine(SetFirstImageRoutine());
+        while (dialogues.Count > 0) {
+            Dialogue currDialog = dialogues.First();
+            dialogues.RemoveAt(0);
+            yield return StartCoroutine(SayDialogueRoutine(currDialog));
+        }
+
+        isSpeaking = false;
     }
 
-    private IEnumerator SetFirstImageRoutine() {
-        ShowImage((Texture2D)Resources.Load("Characters/Dash"), 1);
-        ShowImage((Texture2D)Resources.Load("Characters/Colonel"), 2);
-        Speak(1);
+    private IEnumerator SayDialogueRoutine(Dialogue dialogue) {
+        ClearDialogue();
 
-        yield return new WaitForSeconds(1);
-        Speak(2);
+        SetSpeakingImg(dialogue.position);
+        SetSpeakingName(dialogue.characterName);
+        
+        yield return StartCoroutine(SpeakRoutine(dialogue.dialogueText));
+        yield return new WaitForSeconds(textFinishWaitTime);
+    }
 
-        yield return new WaitForSeconds(1);
-        RemoveImage(2);
+    private IEnumerator TestAddDialoguesAfterSecRoutine() {
+        yield return new WaitForSeconds(0.5f);
 
-        yield return new WaitForSeconds(1);
-        ShowImage((Texture2D)Resources.Load("Characters/Shad"), 2);
-        Speak(2);
-
-        yield return new WaitForSeconds(1);
-        Speak(1);
+        AddDialogue("Shad", "You can't save her!", 2);
+        AddDialogue("Dash", "I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad! I will stop you, Shad!", 1);
+        AddDialogue("Shad", "No, you won't. MWUAHAHAHAHAHAHAHAHAH", 2);
+        AddDialogue("Dash", "... stupid", 1);
 
         yield return new WaitForSeconds(0.5f);
-        Speak(2);
+        AddDialogue("Shad", "You can't save her!", 2);
 
-        yield return new WaitForSeconds(3);
-        Speak(1);
-        
-        yield return new WaitForSeconds(1);
-        RemoveImage(2);
+        yield return new WaitForSeconds(0.5f);
+        AddDialogue("Dash", "I will stop you, Shad!", 1);
     }
 }
