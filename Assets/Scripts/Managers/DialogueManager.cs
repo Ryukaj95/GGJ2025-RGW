@@ -27,14 +27,16 @@ public class DialogueManager : Singleton<DialogueManager>
     private bool isSpeaking = false;
 
     private class Dialogue {
+        public string imageResourcePath;
         public string characterName;
         public string dialogueText;
         public int position;
 
-        public Dialogue(string cN, string d, int p) {
+        public Dialogue(string cN, string d, int p, string iRP) {
             this.characterName = cN;
             this.dialogueText = d;
             this.position = p;
+            this.imageResourcePath = iRP;
         }
     }
 
@@ -54,6 +56,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void ShowImage(Texture2D sourceImage, int position) {
         Image imageInScene = GetImage(position);
+
+        Debug.Log(imageInScene);
 
         if (!imageInScene) return;
         
@@ -82,7 +86,11 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     public void AddDialogue(string character, string text, int position) {
-        dialogues.Add(new Dialogue(character, text, position));
+        dialogues.Add(new Dialogue(character, text, position, "Characters/" + character));
+    }
+
+    public void AddDialogue(string character, string text, int position, string charImageSourcePath) {
+        dialogues.Add(new Dialogue(character, text, position, charImageSourcePath));
     }
 
     private void SetSpeakingName(string charName) {
@@ -135,6 +143,8 @@ public class DialogueManager : Singleton<DialogueManager>
         while (dialogues.Count > 0) {
             Dialogue currDialog = dialogues.First();
             dialogues.RemoveAt(0);
+
+            ShowImage(Resources.Load<Texture2D>(currDialog.imageResourcePath), currDialog.position);
             yield return StartCoroutine(SayDialogueRoutine(currDialog));
         }
 
@@ -160,9 +170,6 @@ public class DialogueManager : Singleton<DialogueManager>
         AddDialogue("Dash", "... stupid", 1);
 
         yield return new WaitForSeconds(0.5f);
-        AddDialogue("Shad", "You can't save her!", 2);
-
-        yield return new WaitForSeconds(0.5f);
-        AddDialogue("Dash", "I will stop you, Shad!", 1);
+        AddDialogue("Colonel", "I will help you", 2);
     }
 }
