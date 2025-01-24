@@ -1,26 +1,79 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Vector2 endPosition = new Vector2(0, 0);
+    private Vector2 endPosition;
     [SerializeField] private float speed = 1f;
 
-    private EnemyPathing enemyPathing;
+    [SerializeField] public int health = 1;
 
-    private void Awake() {
-        enemyPathing = GetComponent<EnemyPathing>();
+    private Vector2 startingPosition;
+
+    private Pathing enemyPathing;
+
+
+
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] playerSprites;
+    [SerializeField] private int spriteIndex = 0;
+
+    private void Awake()
+    {
+        enemyPathing = GetComponent<Pathing>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        startingPosition = new Vector2(this.transform.position.x, this.transform.position.y);
+        endPosition = startingPosition + enemyPathing.GetCurrentPosition();
     }
 
-    private void Update() {
-        if (this.transform.position.Equals(endPosition)) {
+    private void Update()
+    {
+        if (this.transform.position.Equals(endPosition))
+        {
             endPosition = enemyPathing.GetNextPosition();
         }
 
-        // UpdateMovement();
+        if (enemyPathing.CanMove())
+        {
+            UpdateMovement();
+        }
     }
-
-    private void UpdateMovement() {
+    private void UpdateMovement()
+    {
         float step = speed * Time.deltaTime;
         this.transform.position = Vector2.MoveTowards(this.transform.position, endPosition, step);
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.GetComponent<Arena>())
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            StartCoroutine(NextSprite());
+        }
+    }
+
+    public IEnumerator NextSprite()
+    {
+        enemyPathing.SetMove(false);
+        do
+        {
+            spriteIndex = (spriteIndex + 1) % playerSprites.Length;
+            spriteRenderer.sprite = playerSprites[spriteIndex];
+            yield return new WaitForSeconds(0.3f);
+        } while (spriteIndex > 0);
+        StageManager.Instance.DropPoints(this.transform.position);
+        Destroy(this.gameObject);
+    }
+
 }

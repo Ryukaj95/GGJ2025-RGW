@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GGJ2025_Bubbles.sln"
+    "dotnet.defaultSolution": "GGJ2025-RGW.sln"
 }
