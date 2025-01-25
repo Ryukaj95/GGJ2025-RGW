@@ -10,7 +10,7 @@ public class BulletsManager : Singleton<BulletsManager>
 
     [SerializeField] public Transform bulletContainer;
 
-    private List<Bullet> enemyBulletsOnScreen = new List<Bullet>();
+    public static List<Bullet> enemyBulletsOnScreen = new List<Bullet>();
 
     // Creare i proiettili nel BulletManager
     // BulletManager.Instance.CreateEnemyBullet() -> Crea proiettile, popola con i parametri passati (prefabProiettile, posizione, direction, speed)
