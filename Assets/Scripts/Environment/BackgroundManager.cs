@@ -29,6 +29,9 @@ public class BackgroundManager : Singleton<BackgroundManager>
     }
 
     private void PutScolledBackgroundOnTopOfOther(GameObject background) {
+        Debug.Log("BackgroundManager: PutScolledBackgroundOnTopOfOther");
+        Debug.Log(isBackground1OnTop);
+
         if (isBackground1OnTop) {
             isBackground1OnTop = false;
             background1.transform.position = new Vector3(
