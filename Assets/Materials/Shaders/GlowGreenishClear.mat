@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GlowGreen
+  m_Name: GlowGreenishClear
   m_Shader: {fileID: -6465566751694194690, guid: bb83f960192989248a71e44bd52dbc19, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -56,5 +56,5 @@ Material:
     m_Floats:
     - _Alpha: 0
     m_Colors:
-    - _Color: {r: 1.6326269, g: 2.7483773, b: 1.5427212, a: 1}
+    - _Color: {r: 0.34603062, g: 0.9056604, b: 0.46441683, a: 0}
   m_BuildTextureStacks: []
