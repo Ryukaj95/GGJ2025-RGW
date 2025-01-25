@@ -1,17 +1,11 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class ScreenManager : Singleton<ScreenManager>
+public class ScenesManager : Singleton<ScenesManager>
 {
-    private MainMenu mainMenuScreen;
-    private StageManager stageManager;
-
-    private bool mainMenuActive => mainMenuScreen.gameObject.activeSelf;
-
     protected override void Awake() {
         base.Awake();
-
-        mainMenuScreen = GetComponentInChildren<MainMenu>();
-        stageManager = GetComponentInChildren<StageManager>();
     }
 
     private void Start() {
@@ -19,18 +13,12 @@ public class ScreenManager : Singleton<ScreenManager>
     }
 
     public void StartGame() {
-        HideMainMenu();
+        SceneManager.LoadScene("Game");
     }
 
     private void ShowMainMenu() {
-        if (mainMenuActive) return;
+        if (SceneManager.GetActiveScene().name == "MainMenu") return;
 
-        mainMenuScreen.gameObject.SetActive(true);
-    }
-    
-    private void HideMainMenu() {
-        if (!mainMenuActive) return;
-
-        mainMenuScreen.gameObject.SetActive(false);
+        SceneManager.LoadScene("MainMenu");
     }
 }

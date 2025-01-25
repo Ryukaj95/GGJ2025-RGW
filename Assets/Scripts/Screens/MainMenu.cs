@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
         isStarting = true;
 
         yield return new WaitForSeconds(waitTimeBeforeStart);
-        ScreenManager.Instance.StartGame();
+        ScenesManager.Instance.StartGame();
 
         isStarting = false;
     }
