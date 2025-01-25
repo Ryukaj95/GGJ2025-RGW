@@ -8,15 +8,17 @@ public class MainMenu : MonoBehaviour
 
     private bool isStarting = false;
 
-    private void Update() {
-        if (Input.anyKeyDown && !isStarting) {
-            Debug.Log("Starting the game...");
+    private void Update()
+    {
+        if (Input.anyKeyDown && !isStarting)
+        {
 
             StartCoroutine(StartRoutine());
         }
     }
 
-    private IEnumerator StartRoutine() {
+    private IEnumerator StartRoutine()
+    {
         isStarting = true;
 
         yield return new WaitForSeconds(waitTimeBeforeStart);

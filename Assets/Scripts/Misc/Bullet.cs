@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] public string bulletId = "";
     [SerializeField] private bool isFriendlyToPlayer = true;
-
     [SerializeField] private int damage = 1;
     [SerializeField] private float bulletSpeed = 4f;
 
@@ -56,6 +55,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
+
         if (decelerate)
         {
             if (boostSettings.accelerationSpeed > 0)
@@ -81,12 +81,18 @@ public class Bullet : MonoBehaviour
         Rotate();
     }
 
+    private void FixedUpdate()
+    {
+        EvaluateGrazing();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (isFriendlyToPlayer && other.gameObject.GetComponent<Enemy>())
+        if (isFriendlyToPlayer && other.gameObject.GetComponent<EnemyController>())
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
+            StageManager.Instance.hitChain++;
             Destroy(this.gameObject);
             return;
         }
@@ -94,6 +100,7 @@ public class Bullet : MonoBehaviour
         if (!isFriendlyToPlayer && other.gameObject.GetComponent<PlayerController>())
         {
             other.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+            StageManager.Instance.hitChain = 0;
             Destroy(this.gameObject);
             return;
         }
@@ -145,6 +152,14 @@ public class Bullet : MonoBehaviour
     public float GetSpeed()
     {
         return bulletSpeed;
+    }
+
+    public void EvaluateGrazing()
+    {
+        if (PlayerController.Instance.grazeRange.bounds.Contains(this.transform.position))
+        {
+            StageManager.Instance.graze++;
+        }
     }
 
     public void OnDestroy()

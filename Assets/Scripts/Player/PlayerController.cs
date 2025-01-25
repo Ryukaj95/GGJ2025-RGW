@@ -10,7 +10,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private SpriteRenderer spriteRenderer;
     private bool isInvincible = false;
 
-    private Transform spawnPosition;
+    private Vector2 spawnPosition;
 
     [SerializeField] private Sprite[] playerSprites;
     [SerializeField] private int spriteIndex = 0;
@@ -25,20 +25,28 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] public int health = 3;
 
     [SerializeField] private Weapon playerWeapon;
+
+    [SerializeField] public Collider2D grazeRange;
+
+    [Range(0, 100)]
+    public float popCharge = 0;
+
+    [Range(0, 3)]
+    private int popUses = 0;
+
     protected override void Awake()
     {
         base.Awake();
-
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
-        spawnPosition = SpawnPoint.Instance.GetPosition();
-
         moveSpeed = startMoveSpeed;
 
     }
 
     private void OnEnable()
     {
+        spawnPosition = this.transform.position;
+
         playerControls.Enable();
     }
 
@@ -55,6 +63,18 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private void FixedUpdate()
     {
         if (!damageAnim) Move();
+        UpdatePopProgress();
+    }
+
+    public void UpdatePopProgress()
+    {
+        popCharge = Math.Clamp(popCharge += Time.deltaTime * 5, 0f, 100f);
+        if (popCharge == 100f)
+        {
+            popUses = Math.Clamp(popUses + 1, 0, 3);
+        }
+        float popProgressBar = Math.Clamp((popUses + popCharge / 100) / 3, 0f, 1f);
+        // CALL UI MANAGER
     }
 
     private void PlayerInput()
@@ -62,6 +82,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
         movement = playerControls.Movement.Move.ReadValue<Vector2>();
         playerControls.Combat.Shoot.performed += _ => playerWeapon.playerTrigger = true;
         playerControls.Combat.Shoot.canceled += _ => playerWeapon.playerTrigger = false;
+        playerControls.Combat.Pop.performed += _ => callPop();
     }
 
     private void Move()
@@ -116,7 +137,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
     public IEnumerator InvincibleRespawn()
     {
-        if (spawnPosition != null) transform.position = spawnPosition.position;
+        if (spawnPosition != null) transform.position = spawnPosition;
         int i = 0;
         do
         {
@@ -129,4 +150,13 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
         isInvincible = false;
     }
 
+    private void callPop()
+    {
+        if (popUses > 0)
+        {
+            popUses--;
+            popCharge = 0;
+            BulletsManager.Instance.PopAllBullets();
+        }
+    }
 }

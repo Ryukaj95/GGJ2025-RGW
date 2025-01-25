@@ -688,8 +688,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: GGJ2025_Bubbles
-  metroPackageVersion: 
+  metroPackageName: GGJ2025Bubbles
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -697,7 +697,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: GGJ2025_Bubbles
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: GGJ2025_Bubbles
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

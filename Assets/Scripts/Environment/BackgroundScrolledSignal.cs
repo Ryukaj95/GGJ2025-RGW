@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BackgroundScrolledSignal : MonoBehaviour
 {
-    private void OnTriggerExit2D(Collider2D other) {
-        Debug.Log("BackgroundScrolledSignal: OnTriggerExit2D");
+    private void OnTriggerExit2D(Collider2D other)
+    {
 
-        if (other.gameObject.GetComponent<BackgroundImage>() != null) {
+        if (other.gameObject.GetComponent<BackgroundImage>() != null)
+        {
             BackgroundManager.Instance.HandleScrolledBackground(gameObject);
         }
     }

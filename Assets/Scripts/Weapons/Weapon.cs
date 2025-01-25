@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int magazineSize = 7;
     [SerializeField] private float reloadTimeInSeconds = 3f;
 
-    [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] public Bullet bulletPrefab;
 
     [SerializeField] private bool isFriendlyToPlayer = false;
 
@@ -40,6 +40,8 @@ public class Weapon : MonoBehaviour
 
     public bool playerTrigger = false;
 
+    public bool active = true;
+
     private void Awake()
     {
         currentBulletsInMagazine = magazineSize;
@@ -47,6 +49,7 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        if (!active) return;
         if (isMagazineEmpty && !isReloading)
         {
             StartCoroutine(ReloadRoutine());
@@ -67,8 +70,7 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (spawnPoints.Length == 0) return;
-
+        if (spawnPoints.Length == 0 || StageManager.Instance.stopShooting) return;
         if (bulletSpreadSettings.isActive)
         {
             StartCoroutine(ShootSpreadRoutine());
