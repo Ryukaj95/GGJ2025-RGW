@@ -34,7 +34,7 @@ public class DialogueManager : Singleton<DialogueManager>
     protected override void Awake() {
         base.Awake();
 
-        StartCoroutine(TestAddDialoguesAfterSecRoutine());
+        // StartCoroutine(TestAddDialoguesAfterSecRoutine());
     }
 
     private void Update() {

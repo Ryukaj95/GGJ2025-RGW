@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CutsceneManager : Singleton<CutsceneManager>
 {
     protected override void Awake() {
         base.Awake();
 
-        StartCoroutine(TestSetupDialogue());
+        // StartCoroutine(TestSetupDialogue());
     }
 
     public void StartConversation() {
