@@ -8,7 +8,9 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private float startMoveSpeed = 4f;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
-    private bool isInvincible => spriteRenderer.sprite != playerSprites[0];
+    private bool isInvincible = false;
+
+    [SerializeField] private Transform spawnPosition;
 
     [SerializeField] private Sprite[] playerSprites;
     [SerializeField] private int spriteIndex = 0;
@@ -17,6 +19,8 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private Vector2 movement;
     private Rigidbody2D rb;
     private float moveSpeed;
+
+    private bool damageAnim = false;
 
     [SerializeField] public int health = 3;
 
@@ -49,8 +53,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
     private void FixedUpdate()
     {
-        Debug.Log(isInvincible);
-        Move();
+        if (!damageAnim) Move();
     }
 
     private void PlayerInput()
@@ -88,14 +91,41 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
     public IEnumerator DeathAnimation()
     {
+        isInvincible = true;
+        damageAnim = true;
         do
         {
             spriteIndex = (spriteIndex + 1) % playerSprites.Length;
-            spriteRenderer.sprite = playerSprites[spriteIndex];
-            this.transform.localScale = Vector3.one;
-            if (spriteIndex == 0) this.transform.localScale = Vector3.one / 2;
+            if (spriteIndex != 0)
+            {
+                spriteRenderer.sprite = playerSprites[spriteIndex];
+                this.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                spriteRenderer.sprite = null;
+                this.transform.localScale = Vector3.one / 2;
+            }
             yield return new WaitForSeconds(0.3f);
         } while (spriteIndex > 0);
+        damageAnim = false;
+        BulletsManager.Instance.PopAllBullets();
+        StartCoroutine(InvincibleRespawn());
+    }
+
+    public IEnumerator InvincibleRespawn()
+    {
+        if (spawnPosition != null) transform.position = spawnPosition.position;
+        int i = 0;
+        do
+        {
+            spriteRenderer.sprite = null;
+            yield return new WaitForSeconds(0.2f);
+            spriteRenderer.sprite = playerSprites[0];
+            yield return new WaitForSeconds(0.2f);
+            i++;
+        } while (i < 3);
+        isInvincible = false;
     }
 
 }

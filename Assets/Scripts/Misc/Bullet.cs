@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] public string bulletId = ""; // UUID
+    [SerializeField] public string bulletId = "";
     [SerializeField] private bool isFriendlyToPlayer = true;
 
     [SerializeField] private int damage = 1;
@@ -43,6 +43,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        bulletId = System.Guid.NewGuid().ToString();
     }
 
     private void Start()
@@ -57,7 +58,6 @@ public class Bullet : MonoBehaviour
     {
         if (decelerate)
         {
-            Debug.Log("ACCELERATION");
             if (boostSettings.accelerationSpeed > 0)
             {
                 bulletSpeed = bulletSpeed + (boostSettings.accelerationSpeed * Time.fixedDeltaTime);

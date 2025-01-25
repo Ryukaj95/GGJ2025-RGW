@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -13,18 +14,28 @@ public class Enemy : MonoBehaviour
 
     private Pathing enemyPathing;
 
-
-
     private SpriteRenderer spriteRenderer;
-    [SerializeField] private Sprite[] playerSprites;
-    [SerializeField] private int spriteIndex = 0;
+    private List<Sprite> enemySprites = new List<Sprite>();
+    private int spriteIndex = 0;
+
+    private Color transparent = Color.white;
+
+    private Color damage = Color.red;
 
     private void Awake()
     {
         enemyPathing = GetComponent<Pathing>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         startingPosition = new Vector2(this.transform.position.x, this.transform.position.y);
         endPosition = startingPosition + enemyPathing.GetCurrentPosition();
+    }
+
+    private void Start()
+    {
+        enemySprites.Add(spriteRenderer.sprite);
+        enemySprites.Add(Resources.Load<Sprite>("Sprites/explosion1"));
+        enemySprites.Add(Resources.Load<Sprite>("Sprites/explosion2"));
     }
 
     private void Update()
@@ -59,21 +70,37 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            StartCoroutine(NextSprite());
+            StartCoroutine(DeathAnimation());
+        }
+        else
+        {
+            StartCoroutine(DamageAnimation());
         }
     }
 
-    public IEnumerator NextSprite()
+    public IEnumerator DeathAnimation()
     {
         enemyPathing.SetMove(false);
+        if (enemySprites.Count == 0)
+        {
+            Destroy(this.gameObject);
+            yield break;
+        }
         do
         {
-            spriteIndex = (spriteIndex + 1) % playerSprites.Length;
-            spriteRenderer.sprite = playerSprites[spriteIndex];
+            spriteIndex = (spriteIndex + 1) % enemySprites.Count;
+            spriteRenderer.sprite = enemySprites[spriteIndex];
             yield return new WaitForSeconds(0.3f);
         } while (spriteIndex > 0);
         StageManager.Instance.DropPoints(this.transform.position);
         Destroy(this.gameObject);
+    }
+
+    public IEnumerator DamageAnimation()
+    {
+        spriteRenderer.color = damage;
+        yield return new WaitForSeconds(0.3f);
+        spriteRenderer.color = transparent;
     }
 
 }
