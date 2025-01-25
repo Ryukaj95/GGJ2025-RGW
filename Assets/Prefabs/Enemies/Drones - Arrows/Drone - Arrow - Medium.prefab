@@ -132,8 +132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   health: 1
-  enemySprites: []
-  spriteIndex: 0
 --- !u!114 &6110924713198351600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2205bf85fa371f64e93592ea54652fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firedBulletsPerSeconds: 5
+  firedBulletsPerSeconds: 4
   magazineSize: 18
   reloadTimeInSeconds: 2
   bulletPrefab: {fileID: 210167995220660486, guid: d0d79c7f57672bf4f920ffa02d2c599a, type: 3}

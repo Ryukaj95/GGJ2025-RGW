@@ -10,7 +10,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private SpriteRenderer spriteRenderer;
     private bool isInvincible = false;
 
-    [SerializeField] private Transform spawnPosition;
+    private Transform spawnPosition;
 
     [SerializeField] private Sprite[] playerSprites;
     [SerializeField] private int spriteIndex = 0;
@@ -31,6 +31,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
+        spawnPosition = SpawnPoint.Instance.GetPosition();
 
         moveSpeed = startMoveSpeed;
 

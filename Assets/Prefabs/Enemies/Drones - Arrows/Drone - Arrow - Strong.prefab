@@ -132,8 +132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   health: 2
-  enemySprites: []
-  spriteIndex: 0
 --- !u!114 &6110924713198351600
 MonoBehaviour:
   m_ObjectHideFlags: 0
