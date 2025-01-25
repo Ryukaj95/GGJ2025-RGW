@@ -4,29 +4,24 @@ using UnityEngine.SceneManagement;
 
 public class CutsceneManager : Singleton<CutsceneManager>
 {
-    private DialogueManager dialogueManager;
-
     protected override void Awake() {
         base.Awake();
-
-        dialogueManager = DialogueManager.Instance;
 
         StartCoroutine(TestSetupDialogue());
     }
 
     public void StartConversation() {
-        dialogueManager.Show();
+        DialogueManager.Instance.Show();
     }
 
     public void CloseConversation() {
-        dialogueManager.Hide();
+        DialogueManager.Instance.Hide();
     }
 
     public void LoadConversation(DialogueScriptableObj conversation) {
         // Load conversation
-        Debug.Log(conversation);
         foreach (Dialogue dialogue in conversation.dialogs) {
-            dialogueManager.Add(dialogue);
+            DialogueManager.Instance.Add(dialogue);
         }
     }
 

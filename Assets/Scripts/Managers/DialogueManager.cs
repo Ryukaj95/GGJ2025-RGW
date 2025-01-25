@@ -85,14 +85,12 @@ public class DialogueManager : Singleton<DialogueManager>
     }
  
     public void Show() {
-        Debug.Log("Showing dialogue");
         dialogueCanvas.SetActive(true);
     }
 
     public void Hide() {
         if (!dialogueCanvas) return;
 
-        Debug.Log("Hiding dialogue");
         dialogues.Clear();
         dialogueCanvas.SetActive(false);
     }
