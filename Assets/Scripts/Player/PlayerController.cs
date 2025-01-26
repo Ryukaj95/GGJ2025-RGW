@@ -40,6 +40,20 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [Range(0, 3)]
     private int popUses = 0;
 
+
+    [Header("SFX")]
+    [SerializeField] public AudioSource audioSource;
+
+    [SerializeField] public AudioClip damageReceived;
+
+    [SerializeField] public AudioClip dangerSound;
+
+    [SerializeField] public AudioClip criticalSound;
+
+    [SerializeField] public AudioClip deathSound;
+
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -107,20 +121,52 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     {
         if (!isInvincible)
         {
-            StageManager.Instance.ResetKills();
+            StageManager.Instance.hitChain = 0;
+            audioSource.PlayOneShot(damageReceived);
             health -= damage;
             StartCoroutine(DeathAnimation());
-            if (health == 1) UIManager.Instance.TurnOnCriticalLight();
-            else if (health == 2) UIManager.Instance.TurnOnDangerLight();
+            if (health == 1)
+            {
+                UIManager.Instance.TurnOnCriticalLight();
+                StartCoroutine(CriticalSound());
+            }
+            else if (health == 2)
+            {
+                UIManager.Instance.TurnOnDangerLight();
+                StartCoroutine(DangerSound());
+
+            }
             else
             {
                 UIManager.Instance.TurnOffCriticalLight();
                 UIManager.Instance.TurnOffCriticalLight();
             }
+
             if (health <= 0)
             {
+                audioSource.PlayOneShot(deathSound);
                 StageManager.Instance.Lose();
             }
+        }
+    }
+
+    public IEnumerator DangerSound()
+    {
+        while (health == 2)
+        {
+            audioSource.PlayOneShot(dangerSound);
+            yield return new WaitForSeconds(1.5f);
+            if (StageManager.Instance.isPaused) yield return new WaitUntil(() => !StageManager.Instance.isPaused);
+        }
+    }
+
+    public IEnumerator CriticalSound()
+    {
+        while (health == 1)
+        {
+            audioSource.PlayOneShot(criticalSound);
+            yield return new WaitForSeconds(1.5f);
+            if (StageManager.Instance.isPaused) yield return new WaitUntil(() => !StageManager.Instance.isPaused);
         }
     }
 
@@ -179,7 +225,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     public IEnumerator PopAnimation()
     {
         isInvincible = true;
-        //sprite arcobaleno
+        StartCoroutine(ClearAnimator.Instance.ClearAnimation());
         popSpriteRender.sprite = popSprites[0];
         yield return new WaitForSeconds(0.5f);
         popSpriteRender.sprite = popSprites[1];

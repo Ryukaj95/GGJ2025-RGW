@@ -13,6 +13,7 @@ public class CutsceneManager : Singleton<CutsceneManager>
     public void StartConversation()
     {
         DialogueManager.Instance.Show();
+        SoundtrackManager.Instance.PlayDialogueSoundtrack();
     }
 
     public void CloseConversation()

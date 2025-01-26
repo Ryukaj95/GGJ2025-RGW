@@ -56,6 +56,7 @@ public class WaveManager : Singleton<WaveManager>
 
     public void StartWave()
     {
+        SoundtrackManager.Instance.PlayFightSoundtrack();
         spawnQueue.AddRange(CurrentWave.enemies);
         timer = CurrentWave.timer;
         started = true;

@@ -31,6 +31,10 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private BulletSpreadSettings bulletSpreadSettings;
 
+    [SerializeField] AudioSource audioSource;
+
+    [SerializeField] AudioClip shootSound;
+
     private bool isMagazineEmpty => currentBulletsInMagazine <= 0;
     private GameObject shootTarget => PlayerController.Instance.gameObject; // quando ci sarà GameManager, sta a lui
 
@@ -105,6 +109,10 @@ public class Weapon : MonoBehaviour
 
 
             Bullet bullet = BulletsManager.Instance.ShootBullet(startPos, direction, bulletPrefab, isFriendlyToPlayer);
+            if (isFriendlyToPlayer)
+            {
+                audioSource.PlayOneShot(shootSound);
+            }
             if (bulletSpreadSettings.wait > 0)
             {
                 float pastSpeed = bullet.GetSpeed();
@@ -138,6 +146,10 @@ public class Weapon : MonoBehaviour
         Vector2 direction = !isFriendlyToPlayer ? (new Vector2(playerPos.x, playerPos.y) - source).normalized : Vector2.up;
 
         BulletsManager.Instance.ShootBullet(source, direction, bulletPrefab, isFriendlyToPlayer);
+        if (isFriendlyToPlayer)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
         currentBulletsInMagazine -= 1;
 
         yield return new WaitForSeconds(1f / firedBulletsPerSeconds);

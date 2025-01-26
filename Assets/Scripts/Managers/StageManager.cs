@@ -47,6 +47,14 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public Canvas endScoreCanvas;
     [SerializeField] public EndGameScore endGameScore;
 
+    [Header("SFX")]
+
+    [SerializeField] public AudioSource audioSource;
+
+    [SerializeField] public AudioClip endingLevel;
+
+    [SerializeField] public AudioClip startUp;
+
     public void Start()
     {
         endScoreCanvas.enabled = false;
@@ -70,6 +78,7 @@ public class StageManager : Singleton<StageManager>
         }
         stopShooting = false;
         isPaused = false;
+        audioSource.PlayOneShot(startUp);
         WaveManager.Instance.waves = CurrentStage.waves;
         WaveManager.Instance.StartWave();
 
@@ -98,6 +107,7 @@ public class StageManager : Singleton<StageManager>
     {
         UIManager.Instance.TurnOnLeavingLight();
         isPaused = true;
+        audioSource.PlayOneShot(endingLevel);
         yield return new WaitForSeconds(2f);
         if (CurrentStage.endDialogue != null)
         {
@@ -191,6 +201,7 @@ public class StageManager : Singleton<StageManager>
         hitChain = 0;
         kills = 0;
         globalTime = 0;
+        PlayerController.Instance.health = 3;
     }
 
     public void CalculateFunkoScore()

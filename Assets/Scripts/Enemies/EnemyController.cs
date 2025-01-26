@@ -30,11 +30,16 @@ public class EnemyController : MonoBehaviour
 
     public Weapon weapon;
 
+    public List<AudioClip> deathSounds;
+
+    public AudioSource audioSource;
+
     private void Awake()
     {
         enemyPathing = GetComponent<Pathing>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         weapon = GetComponent<Weapon>();
+        audioSource = GetComponent<AudioSource>();
         startingPosition = new Vector2(this.transform.position.x, this.transform.position.y);
         endPosition = startingPosition + enemyPathing.GetCurrentPosition();
     }
@@ -110,6 +115,7 @@ public class EnemyController : MonoBehaviour
     {
         StageManager.Instance.AddKill();
         enemyPathing.SetMove(false);
+        PlayDeathSound();
         do
         {
             spriteIndex = (spriteIndex + 1) % enemySprites.Count;
@@ -126,6 +132,11 @@ public class EnemyController : MonoBehaviour
         spriteRenderer.color = damage;
         yield return new WaitForSeconds(0.3f);
         spriteRenderer.color = transparent;
+    }
+
+    public void PlayDeathSound()
+    {
+        audioSource.PlayOneShot(deathSounds[UnityEngine.Random.Range(0, deathSounds.Count)]);
     }
 
     public void DestroyEnemy()
