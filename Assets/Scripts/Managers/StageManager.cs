@@ -39,6 +39,10 @@ public class StageManager : Singleton<StageManager>
 
     [SerializeField] GameObject credits;
 
+    [SerializeField] GameObject gameOver;
+
+    public bool clear = false;
+
     [Header("RATING")]
     [SerializeField] public float globalTime = 0;
     [SerializeField] public int hitChain = 0;
@@ -58,13 +62,9 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public AudioClip startUp;
 
 
-
     public void Start()
     {
-        endScoreCanvas.enabled = false;
-        isPaused = true;
-        stopShooting = true;
-        StartCoroutine(StartStage());
+        Restart();
     }
 
 
@@ -92,6 +92,11 @@ public class StageManager : Singleton<StageManager>
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
+
         PlayerController.Instance.playerControls.Combat.Shoot.performed += _ => spacePressed = true;
         PlayerController.Instance.playerControls.Combat.Shoot.canceled += _ => spacePressed = false;
         UIManager.Instance.SetScore(score);
@@ -135,8 +140,25 @@ public class StageManager : Singleton<StageManager>
 
     public void Lose()
     {
-        Debug.Log("LOOOOOOOOSE");
+        ResetScore();
+        WaveManager.Instance.Reset();
+        endScoreCanvas.enabled = false;
+        credits.SetActive(false);
+        gameOver.SetActive(true);
+        isPaused = true;
+        clear = true;
     }
+
+    public void Restart()
+    {
+        clear = false;
+        endScoreCanvas.enabled = false;
+        isPaused = true;
+        stopShooting = true;
+        stageIndex = 0;
+        StartCoroutine(StartStage());
+    }
+
     public void Win()
     {
         endScoreCanvas.enabled = false;

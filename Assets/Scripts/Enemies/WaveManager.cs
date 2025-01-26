@@ -137,7 +137,6 @@ public class WaveManager : Singleton<WaveManager>
         started = false;
         timer = 300;
         spawnQueue = new List<EnemyData>();
-        currentEnemies = new List<EnemyController>();
         isEndless = false;
         wavesFinished = false;
     }

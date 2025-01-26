@@ -56,6 +56,8 @@ public class EnemyController : MonoBehaviour
         enemySprites.Add(spriteRenderer.sprite);
         enemySprites.Add(Resources.Load<Sprite>("Sprites/explosion1"));
         enemySprites.Add(Resources.Load<Sprite>("Sprites/explosion2"));
+
+        StartCoroutine(DeathFlag());
     }
 
     private void Update()
@@ -137,6 +139,15 @@ public class EnemyController : MonoBehaviour
     public void PlayDeathSound()
     {
         audioSource.PlayOneShot(deathSounds[UnityEngine.Random.Range(0, deathSounds.Count)]);
+    }
+
+    public IEnumerator DeathFlag()
+    {
+        while (StageManager.Instance.clear == false)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        DestroyEnemy();
     }
 
     public void DestroyEnemy()
