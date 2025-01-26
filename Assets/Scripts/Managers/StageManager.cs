@@ -29,6 +29,21 @@ public class StageManager : Singleton<StageManager>
 
     [SerializeField] public List<StageData> stages;
 
+    [SerializeField]
+    private List<string> randomQuotes = new List<string>(
+        new List<string>
+        {
+            "Keep Going, Dash!",
+            "That's Funky!",
+            "Strike that down!",
+            "You're on a roll!"
+        }
+    );
+
+    [SerializeField] private float timeBetweenQuotes = 15f;
+
+    private bool isSayingRandomQuote = false;
+
     private int stageIndex = 0;
 
     public StageData CurrentStage => stages[stageIndex];
@@ -102,6 +117,11 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.SetScore(score);
         UIManager.Instance.SetChainScore(hitChain);
         CalculateFunkoScore();
+
+        if (!isPaused && !isSayingRandomQuote)
+        {
+            StartCoroutine(ShowRandomQuote());
+        }
     }
 
     public void FixedUpdate()
@@ -265,5 +285,13 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+
+    private IEnumerator ShowRandomQuote()
+    {
+        isSayingRandomQuote = true;
+        yield return UIManager.Instance.Speak(randomQuotes[UnityEngine.Random.Range(0, randomQuotes.Count)]);
+        yield return new WaitForSeconds(timeBetweenQuotes);
+        isSayingRandomQuote = false;
+    }
 
 }
