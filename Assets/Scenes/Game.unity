@@ -664,6 +664,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7057298187333049924, guid: 2887574d5522e5448b439baabfd791da, type: 3}
   m_PrefabInstance: {fileID: 1763381872}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &486255032 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5311687223950451266, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+  m_PrefabInstance: {fileID: 2519180756657861340}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &535440939 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1694277342750487169, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+  m_PrefabInstance: {fileID: 2519180756657861340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &580983746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1975,6 +1985,26 @@ PrefabInstance:
       propertyPath: endScoreCanvas
       value: 
       objectReference: {fileID: 1299400982}
+    - target: {fileID: 8594232015796583827, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+      propertyPath: stages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594232015796583827, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+      propertyPath: stages.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0679002844c15bc4f82129ea0adec18e, type: 2}
+    - target: {fileID: 8594232015796583827, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+      propertyPath: stages.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 19bd9d25479018e4889e6d1306a5687c, type: 2}
+    - target: {fileID: 8594232015796583827, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+      propertyPath: spawnAreas.Array.data[1]
+      value: 
+      objectReference: {fileID: 535440939}
+    - target: {fileID: 8594232015796583827, guid: 501bdea99491a554c88fb7892c5305f8, type: 3}
+      propertyPath: spawnAreas.Array.data[2]
+      value: 
+      objectReference: {fileID: 486255032}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -105,10 +105,10 @@ MonoBehaviour:
   damage: 1
   bulletSpeed: 5
   boostSettings:
-    doesBoost: 0
-    bulletSpeedAfterBoost: 3
+    doesBoost: 1
+    bulletSpeedAfterBoost: 7
     accelaration: 1
-    countdown: 3
+    countdown: 2
 --- !u!50 &5646233081120712887
 Rigidbody2D:
   serializedVersion: 4

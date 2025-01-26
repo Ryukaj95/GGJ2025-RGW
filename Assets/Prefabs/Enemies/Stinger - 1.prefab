@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  health: 1
+  health: 3
   flee: 0
   landing: 0
   weapon: {fileID: 6110924713198351600}
@@ -166,6 +166,8 @@ MonoBehaviour:
     cooldown: 0.5
     radius: 3
     wait: 2
+  audioSource: {fileID: 0}
+  shootSound: {fileID: 0}
   playerTrigger: 0
   active: 1
 --- !u!114 &8424490614119449058
@@ -181,19 +183,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steps:
-  - position: {x: -1, y: 1.5}
+  - position: {x: -1, y: 1}
     stepTime: 0
     isAbsolute: 0
-  - position: {x: 1, y: 1.5}
+  - position: {x: -1, y: -1}
     stepTime: 0
     isAbsolute: 0
-  - position: {x: 3, y: 0}
+  - position: {x: 1, y: -1}
     stepTime: 0
     isAbsolute: 0
-  - position: {x: 0, y: -3}
+  - position: {x: 1, y: 1}
     stepTime: 0
     isAbsolute: 0
-  - position: {x: -3, y: 0}
+  - position: {x: 1, y: 1}
+    stepTime: 0
+    isAbsolute: 0
+  - position: {x: 1, y: -1}
+    stepTime: 0
+    isAbsolute: 0
+  - position: {x: -1, y: -1}
+    stepTime: 0
+    isAbsolute: 0
+  - position: {x: -1, y: 1}
     stepTime: 0
     isAbsolute: 0
   indexPosition: 0

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -71,15 +69,17 @@ public class StageManager : Singleton<StageManager>
     public IEnumerator StartStage()
     {
         isPaused = true;
+        clear = false;
         ResetScore();
         endGameScore.ClearAll();
         UIManager.Instance.TurnOffLights();
-        if (CurrentStage.startDialogue.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.startDialogue.dialogueBG);
         if (CurrentStage.stageBG != null) BackgroundManager.Instance.UpdateBackground(CurrentStage.stageBG);
         if (CurrentStage.startDialogue != null)
         {
+            if (CurrentStage.startDialogue.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.startDialogue.dialogueBG);
             yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.startDialogue);
         }
+        SoundtrackManager.Instance.PlayFightSoundtrack();
         stopShooting = false;
         isPaused = false;
         audioSource.PlayOneShot(startUp);
@@ -92,7 +92,7 @@ public class StageManager : Singleton<StageManager>
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && clear)
         {
             Restart();
         }
@@ -151,8 +151,8 @@ public class StageManager : Singleton<StageManager>
 
     public void Restart()
     {
-        clear = false;
         endScoreCanvas.enabled = false;
+        gameOver.SetActive(false);
         isPaused = true;
         stopShooting = true;
         stageIndex = 0;

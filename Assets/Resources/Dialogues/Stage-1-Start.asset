@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b669c798c72692e4eb6732e19dde9fce, type: 3}
+  m_Name: Stage-1-Start
+  m_EditorClassIdentifier: 
+  dialogueBG: {fileID: 21300000, guid: f9e78ef4e96863b4191ca621fafca09f, type: 3}
+  dialogs:
+  - characterName: '-'
+    dialogueText: After a long day of training, Jackson McSprint, also known as Dash,
+      finally gets back home to his apartment, hoping to get his well-deserved rest
+      before the big race tomorrow.
+    position: 0
+  - characterName: Dash
+    dialogueText: "Lotus, I\u2019m home\u2026"
+    position: 1
+  - characterName: '-'
+    dialogueText: Dash finds out their apartment was completely destroyed, and his
+      beloved Lotus was nowhere to be found.
+    position: 0
+  - characterName: '-'
+    dialogueText: 'On the floor, pieces of glass hide a matchbox with a brand on
+      it: Bertos.'
+    position: 0
+  - characterName: '-'
+    dialogueText: "Bertos\u2026 The MBS Manufacturing company?! Are they so desperate
+      to win the race tomorrow to kidnap a woman and stop me?"
+    position: 0
+  - characterName: '-'
+    dialogueText: "Dash dials up his dear friend\u2019s number on the MBS interface:
+      Codename BOSS. Chief of Security."
+    position: 0
+  - characterName: Dash
+    dialogueText: Boss! Something happened to Lotus.
+    position: 1
+  - characterName: Boss
+    dialogueText: 'Is she hurt?! '
+    position: 2
+  - characterName: Dash
+    dialogueText: "I don\u2019t know. I just got back from training, and the entire
+      place is destroyed and Lotus\u2026 she\u2019s gone."
+    position: 1
+  - characterName: '-'
+    dialogueText: Dash hits the control panel in pure anger.
+    position: 0
+  - characterName: Boss
+    dialogueText: Stay focused Dash, we have no time to waste here. Any idea on who
+      might have done it?
+    position: 2
+  - characterName: Dash
+    dialogueText: Bertos I think. I found one of their Matchboxes in the living room.
+    position: 1
+  - characterName: Boss
+    dialogueText: "A matchbox? It\u2019s been more than two centuries since the invention
+      of lighters."
+    position: 2
+  - characterName: Dash
+    dialogueText: "I don\u2019t care about this Boss! Do you have any information
+      on them?!"
+    position: 1
+  - characterName: Boss
+    dialogueText: "I don\u2019t have anything more than what you already know. Give
+      me some time, I\u2019ll call a few friends and keep you updated."
+    position: 2
+  - characterName: Dash
+    dialogueText: "I can\u2019t stay here while Lotus might be in danger Boss, I\u2019m
+      going to rescue her."
+    position: 1
+  - characterName: Boss
+    dialogueText: "Don\u2019t be stupid Dash, you have a race tomorrow morning and
+      you\u2019re exhausted from training! You can\u2019t do this! "
+    position: 2
+  - characterName: Dash
+    dialogueText: "I know\u2026"
+    position: 1
+  - characterName: Dash
+    dialogueText: ... Yet, I will
+    position: 1

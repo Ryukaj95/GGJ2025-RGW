@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b669c798c72692e4eb6732e19dde9fce, type: 3}
+  m_Name: Interval-B
+  m_EditorClassIdentifier: 
+  dialogueBG: {fileID: 21300000, guid: c075f4fc77e133943833a8fc54c28884, type: 3}
+  dialogs:
+  - characterName: Boss
+    dialogueText: "I can see you\u2019re getting closer to the Bertos Tower, you\u2019re
+      doi\u2013 -at\u2026 oing Da-"
+    position: 2
+  - characterName: '-'
+    dialogueText: An intense interference starts hitting the MBS, the communications
+      with Boss seems to loosen up.
+    position: 0
+  - characterName: Dash
+    dialogueText: "Boss?! I can\u2019t hear you, what\u2019s going on?! "
+    position: 1
+  - characterName: Boss
+    dialogueText: That looked tough, great work out there Dash.
+    position: 2
+  - characterName: Dash
+    dialogueText: Tsk. Just another day on the job!
+    position: 1
+  - characterName: Boss
+    dialogueText: Stay focused! We're getting ready to approach Bertos Tow-
+    position: 2
+  - characterName: '-'
+    dialogueText: 'MBS: Connection to Funk-O Base is now offline'
+    position: 0
+  - characterName: Dash
+    dialogueText: ...What? Come again Boss? Boss?!
+    position: 1
+  - characterName: Shad
+    dialogueText: Not so fast you punk.
+    position: 2
+  - characterName: Dash
+    dialogueText: Who the hell are you? Let me guess, another Bertos lapdog?
+    position: 1
+  - characterName: Shad
+    dialogueText: I'm you Dash, but I'm wayyyy better!
+    position: 2
+  - characterName: Dash
+    dialogueText: Hey! That sounds like something I would say! Wait...
+    position: 1
+  - characterName: Shad
+    dialogueText: '*starts laughing maniacally*'
+    position: 2
+  - characterName: Dash
+    dialogueText: That cannot be... Shad?! Is that you?!
+    position: 1
+  - characterName: Shad
+    dialogueText: Long time no see brother, I've been waiting for this.
+    position: 2
+  - characterName: Dash
+    dialogueText: Why the hell would you side with those corpo fucks?
+    position: 1
+  - characterName: Shad
+    dialogueText: 'I don''t just side with them, brother. I own the whole thing. '
+    position: 2
+  - characterName: '-'
+    dialogueText: You see, power is way better than brotherhood.
+    position: 0
+  - characterName: Dash
+    dialogueText: Damn you sound boring! Stop wasting my time and let me see how
+      you handle that piece of junk!
+    position: 1

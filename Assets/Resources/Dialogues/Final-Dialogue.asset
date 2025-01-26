@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b669c798c72692e4eb6732e19dde9fce, type: 3}
+  m_Name: Final-Dialogue
+  m_EditorClassIdentifier: 
+  dialogueBG: {fileID: 21300000, guid: b0a19a92c041d0a4aab16127c6fc66fd, type: 3}
+  dialogs:
+  - characterName: Dash
+    dialogueText: Take this!
+    position: 1
+  - characterName: '-'
+    dialogueText: "One last bubble hits Shad\u2019s MBS, making it malfunction."
+    position: 0
+  - characterName: Shad
+    dialogueText: No!!!
+    position: 2
+  - characterName: '-'
+    dialogueText: "Noises of engines firing up, malfunctioning and gears breaking
+      up cover the city\u2019s bustling noises. "
+    position: 0
+  - characterName: Shad
+    dialogueText: "I just wanted\u2026. To be the best\u2026 And for me to be the
+      best -  I had to take it from you\u2026"
+    position: 2
+  - characterName: Dash
+    dialogueText: "You\u2019ll never be the best if you leech on to others to achieve
+      your goals, Shad."
+    position: 1
+  - characterName: Shad
+    dialogueText: "No!!! I failed\u2026 I-"
+    position: 2
+  - characterName: '-'
+    dialogueText: "A sudden explosion bursts from Shad\u2019s MBS. Flames and smoke
+      fill up the suit as it starts falling into the ground."
+    position: 0
+  - characterName: Shad
+    dialogueText: 'AAAARGHH!!! '
+    position: 2
+  - characterName: '-'
+    dialogueText: Moments pass. Dash finally lands where Lotus was being kept away
+      from him. They hug softly.
+    position: 0
+  - characterName: Lotus
+    dialogueText: "Dash! You\u2019re finally here!"
+    position: 2
+  - characterName: Dash
+    dialogueText: "My dear Lotus\u2026"
+    position: 1
+  - characterName: '-'
+    dialogueText: "A call from Dash\u2019s phone interrupts the hug."
+    position: 0
+  - characterName: Boss
+    dialogueText: Everything alright?!
+    position: 2
+  - characterName: Dash
+    dialogueText: "We made it, Boss. Shad is no more\u2026 And I don\u2019t know
+      what to think of it."
+    position: 1
+  - characterName: Boss
+    dialogueText: Less thinking, Dash. It rots the brain - Calm yourself before the
+      competition takes place.
+    position: 2
+  - characterName: Dash
+    dialogueText: "\u2026Roger that, Boss."
+    position: 1
+  - characterName: '-'
+    dialogueText: Dash hangs up the phone and looks Lotus in the eyes.
+    position: 0
+  - characterName: Lotus
+    dialogueText: 'You just lost your brother for a second time. I know it must be
+      hard on you. '
+    position: 2
+  - characterName: Dash
+    dialogueText: Not as hard as even thinking about losing you.
+    position: 1
+  - characterName: Lotus
+    dialogueText: "Oh, Dash\u2026 Let\u2019s take some time. I\u2019m here for you."
+    position: 2
+  - characterName: Dash
+    dialogueText: "We\u2019re here. You\u2019re here. That's all that matters now"
+    position: 1

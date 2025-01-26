@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6655270cfd69d942821e9dc367d8fec, type: 3}
+  m_Name: 2-5-2
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 6073034037739376478, guid: d7b0ee7a2a8295e4c8b160bc2c225fc9, type: 3}
+  landingArea: 2
+  spawnArea: 1
+  isRandom: 1

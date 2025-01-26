@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7474ba2d3413464395907789aebfb31, type: 3}
+  m_Name: 1-4
+  m_EditorClassIdentifier: 
+  isRandom: 0
+  isLooping: 0
+  spawnRate: 1.5
+  enemies:
+  - {fileID: 11400000, guid: 56b63303ca2763e4d98e695b8a789fbb, type: 2}
+  - {fileID: 11400000, guid: 21dd169e05b61e6408769328dd28ed8f, type: 2}
+  - {fileID: 11400000, guid: 6a4513d8060d0494badb68459411493c, type: 2}
+  - {fileID: 11400000, guid: 2baaaa05dc460104285d1d722c4cee92, type: 2}
+  isBossWave: 0
+  timer: 300
