@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -190,7 +191,15 @@ public class DialogueManager : Singleton<DialogueManager>
             Dialogue currDialog = dialogues.First();
             dialogues.RemoveAt(0);
 
-            ShowImage(Resources.Load<Texture2D>("Characters/" + currDialog.characterName), currDialog.position);
+            if (currDialog.characterName == "-" && currDialog.dialogueText == "-") {
+                RemoveImage(currDialog.position);
+                continue;
+            } 
+
+            if (currDialog.characterName != "-") {
+                ShowImage(Resources.Load<Texture2D>("Characters/" + currDialog.characterName), currDialog.position);
+            }
+
             yield return StartCoroutine(SayDialogueRoutine(currDialog));
         }
 
@@ -202,7 +211,12 @@ public class DialogueManager : Singleton<DialogueManager>
         ClearDialogue();
 
         SetSpeakingImg(dialogue.position);
-        SetSpeakingName(dialogue.characterName);
+
+        if (dialogue.characterName == "-") {
+            SetSpeakingName("");
+        } else {
+            SetSpeakingName(dialogue.characterName);
+        }
 
         yield return StartCoroutine(SpeakRoutine(dialogue.dialogueText));
         // yield return new WaitForSeconds(textFinishWaitTime);
