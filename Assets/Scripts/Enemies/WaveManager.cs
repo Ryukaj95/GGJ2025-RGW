@@ -13,7 +13,7 @@ public class WaveManager : Singleton<WaveManager>
 
     [SerializeField] public float timer = 300;
 
-    private List<GameObject> spawnQueue = new List<GameObject>();
+    private List<EnemyData> spawnQueue = new List<EnemyData>();
 
     [SerializeField] public List<WaveData> waves;
 
@@ -21,27 +21,20 @@ public class WaveManager : Singleton<WaveManager>
 
     [SerializeField] private bool isEndless = false;
 
-    void OnEnable()
-    {
-        spawnQueue.AddRange(CurrentWave.enemies);
-        timer = CurrentWave.timer;
-    }
-
     public void NextWave()
     {
         StageManager.Instance.stopShooting = false;
+        currentWaveIndex++;
         if (currentWaveIndex < waves.Count)
         {
-            currentWaveIndex++;
             spawnQueue.AddRange(CurrentWave.enemies);
             timer = CurrentWave.timer;
             StartWave();
         }
-    }
-
-    void Start()
-    {
-        StartWave();
+        else
+        {
+            StartCoroutine(StageManager.Instance.EndStage());
+        }
     }
 
     // Update is called once per frame
@@ -60,7 +53,8 @@ public class WaveManager : Singleton<WaveManager>
 
     public void StartWave()
     {
-        Debug.Log("Wave number: " + currentWaveIndex);
+        spawnQueue.AddRange(CurrentWave.enemies);
+        timer = CurrentWave.timer;
         started = true;
         StartCoroutine(SpawnEnemies());
     }
@@ -69,17 +63,13 @@ public class WaveManager : Singleton<WaveManager>
     {
         while (started && spawnQueue.Count > 0)
         {
-            Collider2D spawnArea = StageManager.Instance.enemySpawnArea;
-            Vector3 spawnPoint = new Vector3(
-                UnityEngine.Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
-                UnityEngine.Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y),
-                UnityEngine.Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
-
             if (CurrentWave.isRandom)
             {
                 int randomIndex = UnityEngine.Random.Range(0, spawnQueue.Count);
-                EnemyController enemy = Instantiate(spawnQueue[randomIndex]).GetComponent<EnemyController>();
-                enemy.transform.position = spawnPoint;
+                EnemyData chosenEnemy = spawnQueue[randomIndex];
+                EnemyController enemy = Instantiate(chosenEnemy.enemyPrefab).GetComponent<EnemyController>();
+                enemy.transform.position = chosenEnemy.isRandom ? GetRandomPointOfCollider(StageManager.Instance.spawnAreas[UnityEngine.Random.Range(0, StageManager.Instance.spawnAreas.Count)])
+                                                                : GetRandomPointOfCollider(StageManager.Instance.spawnAreas[chosenEnemy.spawnArea]);
                 currentEnemies.Add(enemy);
                 if (!CurrentWave.isLooping)
                 {
@@ -91,8 +81,9 @@ public class WaveManager : Singleton<WaveManager>
             {
                 foreach (var toSpawn in spawnQueue)
                 {
-                    EnemyController enemy = Instantiate(toSpawn).GetComponent<EnemyController>();
-                    enemy.transform.position = spawnPoint;
+                    EnemyController enemy = Instantiate(toSpawn.enemyPrefab).GetComponent<EnemyController>();
+                    enemy.transform.position = toSpawn.isRandom ? GetRandomPointOfCollider(StageManager.Instance.spawnAreas[UnityEngine.Random.Range(0, StageManager.Instance.spawnAreas.Count)])
+                                                                : GetRandomPointOfCollider(StageManager.Instance.spawnAreas[toSpawn.spawnArea]);
                     currentEnemies.Add(enemy);
                     yield return new WaitForSeconds(CurrentWave.spawnRate);
                 }
@@ -136,16 +127,31 @@ public class WaveManager : Singleton<WaveManager>
         }
     }
 
-    public void SpawnEnemy(GameObject enemyObj, Vector2 spawnPosition)
+    public void SpawnEnemy(GameObject enemyObj, Vector2 spawnPosition, EnemyData enemyData)
     {
         EnemyController enemy = Instantiate(enemyObj).GetComponent<EnemyController>();
         enemy.transform.position = spawnPosition;
-        Bounds landArea = StageManager.Instance.landingAreas[UnityEngine.Random.Range(0, StageManager.Instance.landingAreas.Count)].bounds;
-        Vector3 landPoint = new Vector3(
-                UnityEngine.Random.Range(landArea.min.x, landArea.max.x),
-                UnityEngine.Random.Range(landArea.min.y, landArea.max.y),
-                UnityEngine.Random.Range(landArea.min.z, landArea.max.z));
-        enemy.Land(landPoint);
+
+        Collider2D landArea = enemyData.isRandom ? StageManager.Instance.landingAreas[UnityEngine.Random.Range(0, StageManager.Instance.landingAreas.Count)]
+                                                 : StageManager.Instance.landingAreas[enemyData.landingArea];
+
+        enemy.Land(GetRandomPointOfCollider(landArea));
         currentEnemies.Add(enemy);
     }
+
+    public List<GameObject> GetEnemiesOfCurrentWave()
+    {
+        List<GameObject> enemies = new List<GameObject>();
+        CurrentWave.enemies.ForEach(enemy => enemies.Add(enemy.enemyPrefab));
+        return enemies;
+    }
+
+    public Vector3 GetRandomPointOfCollider(Collider2D collider)
+    {
+        return new Vector3(
+            UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x),
+            UnityEngine.Random.Range(collider.bounds.min.y, collider.bounds.max.y),
+            UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
+    }
+
 }

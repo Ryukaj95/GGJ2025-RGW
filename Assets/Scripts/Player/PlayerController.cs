@@ -146,7 +146,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
             spriteRenderer.sprite = playerSprites[0];
             yield return new WaitForSeconds(0.2f);
             i++;
-        } while (i < 3);
+        } while (i < 6);
         isInvincible = false;
     }
 

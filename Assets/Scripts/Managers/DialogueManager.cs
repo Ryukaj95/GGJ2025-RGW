@@ -18,6 +18,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
     [SerializeField] private GameObject dialogueCanvas;
 
+    [SerializeField] private Image dialogueBackground;
+
     private bool isReady => dialogueCanvas.activeSelf;
     private bool canStartDialogue => isReady && !isSpeaking && dialogues.Count > 0;
 
@@ -31,19 +33,23 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private List<Dialogue> dialogues = new List<Dialogue>();
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
 
         // StartCoroutine(TestAddDialoguesAfterSecRoutine());
     }
 
-    private void Update() {
-        if (canStartDialogue) {
+    private void Update()
+    {
+        if (canStartDialogue)
+        {
             StartCoroutine(StartDialogueRoutine());
         }
     }
 
-    public void ShowImage(Texture2D sourceImage, int position) {
+    public void ShowImage(Texture2D sourceImage, int position)
+    {
         Image imageInScene = GetImage(position);
 
         if (!imageInScene) return;
@@ -58,7 +64,8 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    public void RemoveImage(int position) {
+    public void RemoveImage(int position)
+    {
         Image imageInScene = GetImage(position);
 
         if (!imageInScene) return;
@@ -67,55 +74,68 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = emptyColor;
     }
 
-    public void SetSpeakingImg(int position) {
+    public void SetSpeakingImg(int position)
+    {
         SetImageToFront(position);
         SetImageToBackground(position == 1 ? 2 : 1);
     }
 
-    public void Add(string character, string text, int position) {
+    public void Add(string character, string text, int position)
+    {
         if (!isReady) return;
 
         dialogues.Add(new Dialogue(character, text, position));
     }
 
-    public void Add(Dialogue dialogue) {
+    public void Add(Dialogue dialogue)
+    {
         if (!isReady) return;
 
         dialogues.Add(dialogue);
     }
- 
-    public void Show() {
+
+    public void Show()
+    {
         dialogueCanvas.SetActive(true);
     }
 
-    public void Hide() {
+    public void Hide()
+    {
         if (!dialogueCanvas) return;
 
         dialogues.Clear();
         dialogueCanvas.SetActive(false);
     }
 
-    private void SetSpeakingName(string charName) {
+    private void SetSpeakingName(string charName)
+    {
         nameText.text = charName;
     }
 
-    private void ClearDialogue() {
+    private void ClearDialogue()
+    {
         dialogueText.text = "";
     }
 
-    private Image GetImage(int position) {
-        if (position != 1 && position != 2) {
+    private Image GetImage(int position)
+    {
+        if (position != 1 && position != 2)
+        {
             return null;
         }
 
-        if (position == 1) {
+        if (position == 1)
+        {
             return positionImageOne.GetComponent<Image>();
-        } else {
+        }
+        else
+        {
             return positionImageTwo.GetComponent<Image>();
         }
     }
 
-    private void SetImageToBackground(int position) {
+    private void SetImageToBackground(int position)
+    {
         Image imageInScene = GetImage(position);
 
         if (!imageInScene || imageInScene.sprite == null) return;
@@ -123,7 +143,8 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = backgroundColor;
     }
 
-    private void SetImageToFront(int position) {
+    private void SetImageToFront(int position)
+    {
         Image imageInScene = GetImage(position);
 
         if (!imageInScene || imageInScene.sprite == null) return;
@@ -131,37 +152,41 @@ public class DialogueManager : Singleton<DialogueManager>
         imageInScene.color = visibleColor;
     }
 
-    private IEnumerator SpeakRoutine(string text) {
-    ClearDialogue();
-    dialogueText.pageToDisplay = 1;
+    private IEnumerator SpeakRoutine(string text)
+    {
+        ClearDialogue();
+        dialogueText.pageToDisplay = 1;
 
-    foreach (char letter in text) {
-        dialogueText.text += letter;
-        dialogueText.ForceMeshUpdate();
-
-        // Check if the current page is full
-        if (dialogueText.pageToDisplay < dialogueText.textInfo.pageCount)
+        foreach (char letter in text)
         {
-            // Wait for the user to click before proceeding to the next page
-            isWaitingForContinue = true;
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-            isWaitingForContinue = false;
-            dialogueText.pageToDisplay++;
+            dialogueText.text += letter;
+            dialogueText.ForceMeshUpdate();
+
+            // Check if the current page is full
+            if (dialogueText.pageToDisplay < dialogueText.textInfo.pageCount)
+            {
+                // Wait for the user to click before proceeding to the next page
+                isWaitingForContinue = true;
+                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+                isWaitingForContinue = false;
+                dialogueText.pageToDisplay++;
+            }
+
+            yield return new WaitForSeconds(textSpeed / 10);
         }
 
-        yield return new WaitForSeconds(textSpeed / 10);
+        // Final wait for user input to confirm the end of the dialogue
+        isWaitingForContinue = true;
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        isWaitingForContinue = false;
     }
 
-    // Final wait for user input to confirm the end of the dialogue
-    isWaitingForContinue = true;
-    yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-    isWaitingForContinue = false;
-}
-
-    private IEnumerator StartDialogueRoutine() {
+    private IEnumerator StartDialogueRoutine()
+    {
         isSpeaking = true;
 
-        while (dialogues.Count > 0) {
+        while (dialogues.Count > 0)
+        {
             Dialogue currDialog = dialogues.First();
             dialogues.RemoveAt(0);
 
@@ -172,7 +197,8 @@ public class DialogueManager : Singleton<DialogueManager>
         isSpeaking = false;
     }
 
-    private IEnumerator SayDialogueRoutine(Dialogue dialogue) {
+    private IEnumerator SayDialogueRoutine(Dialogue dialogue)
+    {
         ClearDialogue();
 
         SetSpeakingImg(dialogue.position);
@@ -182,7 +208,8 @@ public class DialogueManager : Singleton<DialogueManager>
         // yield return new WaitForSeconds(textFinishWaitTime);
     }
 
-    private IEnumerator TestAddDialoguesAfterSecRoutine() {
+    private IEnumerator TestAddDialoguesAfterSecRoutine()
+    {
         yield return new WaitForSeconds(0.5f);
 
         Add("Shad", "You can't save her!", 2);
@@ -197,7 +224,13 @@ public class DialogueManager : Singleton<DialogueManager>
         Add("Lotus", "Guys... I'm already safe", 1);
     }
 
-    public IEnumerator WaitForDialogueToFinish() {
+    public IEnumerator WaitForDialogueToFinish()
+    {
         yield return new WaitUntil(() => !isSpeaking && dialogues.Count == 0);
+    }
+
+    public void UpdateBackground(Sprite sprite)
+    {
+        dialogueBackground.sprite = sprite;
     }
 }

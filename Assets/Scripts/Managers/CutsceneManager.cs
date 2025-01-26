@@ -32,13 +32,11 @@ public class CutsceneManager : Singleton<CutsceneManager>
     public IEnumerator JumpstartDialogue(DialogueScriptableObj conversation)
     {
         StartConversation();
-        LoadConversation(
-            Resources.Load<DialogueScriptableObj>("Conversations/Conversation1")
-        );
-
+        LoadConversation(conversation);
+        //DialogueManager.Instance.UpdateBackground(StageManager.Instance.CurrentStage.dialogueBG);
         yield return DialogueManager.Instance.WaitForDialogueToFinish();
 
-        LoadConversation(conversation);
+        CloseConversation();
     }
 
     private IEnumerator TestSetupDialogue()

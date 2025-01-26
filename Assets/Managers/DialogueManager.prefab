@@ -48,7 +48,8 @@ MonoBehaviour:
   positionImageTwo: {fileID: 0}
   dialogueText: {fileID: 0}
   nameText: {fileID: 0}
-  textSpeed: 0.7
+  textSpeed: 0.4
   textFinishWaitTime: 4
   dialogueCanvas: {fileID: 0}
+  dialogueBackground: {fileID: 0}
   isWaitingForContinue: 0

@@ -7,6 +7,7 @@ using UnityEngine;
 public class StageManager : Singleton<StageManager>
 {
 
+
     [Header("Areas")]
     [SerializeField] public bool isPaused = false;
 
@@ -22,12 +23,16 @@ public class StageManager : Singleton<StageManager>
 
     public Collider2D enemySpawnArea => spawnAreas[UnityEngine.Random.Range(0, spawnAreas.Count)];
 
-    [Header("Player")]
+    [Header("Stage")]
     [SerializeField] public Points points;
 
-    [SerializeField] public int stageLevel;
-
     [SerializeField] public bool stopShooting = false;
+
+    [SerializeField] public List<StageData> stages;
+
+    private int stageIndex = 0;
+
+    public StageData CurrentStage => stages[stageIndex];
 
     [Header("RATING")]
     [SerializeField] public float time = 300;
@@ -36,6 +41,28 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public int graze = 0;
     [SerializeField] public int kills = 0;
 
+
+    public void Start()
+    {
+        isPaused = true;
+        stopShooting = true;
+        StartCoroutine(StartStage());
+    }
+
+
+    public IEnumerator StartStage()
+    {
+        if (CurrentStage.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.dialogueBG);
+        if (CurrentStage.stageBG != null) BackgroundManager.Instance.UpdateBackground(CurrentStage.stageBG);
+        if (CurrentStage.startDialogue != null)
+        {
+            yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.startDialogue);
+        }
+        stopShooting = false;
+        WaveManager.Instance.waves = CurrentStage.waves;
+        WaveManager.Instance.StartWave();
+    }
+
     public void Update()
     {
         if (!isPaused)
@@ -43,7 +70,8 @@ public class StageManager : Singleton<StageManager>
             time -= Time.deltaTime;
             if (time < 0)
             {
-                EndStage();
+                isPaused = true;
+                StartCoroutine(EndStage());
             }
             float minutes = Mathf.FloorToInt(time / 60);
             float seconds = Mathf.FloorToInt(time % 60);
@@ -52,14 +80,32 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void EndStage()
+    public IEnumerator EndStage()
     {
-        // Logic here
+        yield return new WaitForSeconds(2f);
+        if (CurrentStage.endDialogue != null)
+        {
+            yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.endDialogue);
+        }
+        stopShooting = true;
+        if (stageIndex == stages.Count - 1)
+        {
+            Win();
+        }
+        else
+        {
+            stageIndex++;
+            StartCoroutine(StartStage());
+        }
     }
 
     public void Lose()
     {
-
+        Debug.Log("LOOOOOOOOSE");
+    }
+    public void Win()
+    {
+        Debug.Log("WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
     }
 
     public void DropPoints(UnityEngine.Vector2 pos)

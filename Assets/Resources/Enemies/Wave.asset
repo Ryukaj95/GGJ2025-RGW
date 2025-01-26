@@ -16,8 +16,8 @@ MonoBehaviour:
   isLooping: 0
   spawnRate: 2
   enemies:
-  - {fileID: 6073034037739376478, guid: 838150341aa760345afac8e545da46e9, type: 3}
-  - {fileID: 6073034037739376478, guid: 46417c9797af2d742a8388ad174653a1, type: 3}
-  - {fileID: 6073034037739376478, guid: 619e340a37b6cbf43a3acde0fb644e2d, type: 3}
+  - {fileID: 11400000, guid: 9dba285de18c14e4796ecd1fd194e27a, type: 2}
+  - {fileID: 11400000, guid: 9dba285de18c14e4796ecd1fd194e27a, type: 2}
+  - {fileID: 11400000, guid: 8b341f65319179b479e77da0a7ca6edc, type: 2}
   isBossWave: 0
   timer: 300

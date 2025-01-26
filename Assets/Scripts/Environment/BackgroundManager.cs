@@ -55,4 +55,10 @@ public class BackgroundManager : Singleton<BackgroundManager>
     {
         PutScolledBackgroundOnTopOfOther(background);
     }
+
+    public void UpdateBackground(Sprite newSprite)
+    {
+        background1.GetComponent<SpriteRenderer>().sprite = newSprite;
+        background2.GetComponent<SpriteRenderer>().sprite = newSprite;
+    }
 }
