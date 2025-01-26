@@ -12,40 +12,47 @@ public class ContinueButton : MonoBehaviour
     private Vector2 initialButtonPosition;
     private Coroutine moveButtonRoutine;
 
-    private void Start() {
+    private void Start()
+    {
         buttonRT = continueButton.GetComponent<RectTransform>();
         initialButtonPosition = buttonRT.anchoredPosition;
     }
 
-    private void Update() {
-        if (DialogueManager.Instance.isWaitingForContinue && moveButtonRoutine == null) {
+    private void Update()
+    {
+        if (DialogueManager.Instance.isWaitingForContinue && moveButtonRoutine == null)
+        {
             StartMoving();
             return;
         }
 
-        if (!DialogueManager.Instance.isWaitingForContinue && moveButtonRoutine != null) {
+        if (!DialogueManager.Instance.isWaitingForContinue && moveButtonRoutine != null)
+        {
             StopMoving();
             return;
         }
     }
 
-    private void StartMoving() {
+    private void StartMoving()
+    {
         moveButtonRoutine = StartCoroutine(MoveButtonRoutine());
     }
 
-    private void StopMoving() {
+    private void StopMoving()
+    {
         StopCoroutine(moveButtonRoutine);
         moveButtonRoutine = null;
         buttonRT.anchoredPosition = initialButtonPosition;
     }
 
-    private IEnumerator MoveButtonRoutine() {
+    private IEnumerator MoveButtonRoutine()
+    {
         Vector2 defaultPosition = buttonRT.anchoredPosition;
         Vector2 movedPosition = defaultPosition;
         movedPosition.y -= shift;
 
-        while(true) {
-            Debug.Log("Moving...");
+        while (true)
+        {
             buttonRT.anchoredPosition = movedPosition;
             yield return new WaitForSeconds(movingSpeed);
             buttonRT.anchoredPosition = defaultPosition;

@@ -14,7 +14,8 @@ public class UIManager : Singleton<UIManager>
 
     private string scoreStr => score.ToString("D12");
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
 
         // StartCoroutine(TestScoreRoutine());
@@ -25,149 +26,180 @@ public class UIManager : Singleton<UIManager>
 
     // SCORE RELATED METHODS
 
-    public void ResetScore() {
+    public void ResetScore()
+    {
         score = 0;
         scoreText.text = scoreStr;
     }
-    
-    public void AddScore(int value) {
+
+    public void AddScore(int value)
+    {
         score += value;
         scoreText.text = scoreStr;
     }
 
-    public void SetScore(int value) {
+    public void SetScore(int value)
+    {
         score = value;
         scoreText.text = scoreStr;
     }
 
-    public int GetScore() {
+    public int GetScore()
+    {
         return score;
     }
 
     // POP RELATED METHODS
 
-    public void SetPopProgress(float value) {
+    public void SetPopProgress(float value)
+    {
         clearPop.SetProgress(value);
     }
 
-    public void AddPopProgress(float value) {
+    public void AddPopProgress(float value)
+    {
         clearPop.AddProgress(value);
     }
 
-    public void RemovePopProgress(float value) {
+    public void RemovePopProgress(float value)
+    {
         clearPop.RemoveProgress(value);
     }
-    
-    public float GetCurrentPopProgress() {
+
+    public float GetCurrentPopProgress()
+    {
         return clearPop.GetProgress();
     }
 
     // FUNKO RELATED METHODS
 
-    public void SetFunko(int _value) {
+    public void SetFunko(int _value)
+    {
         int value = Math.Clamp(_value, 0, 5);
     }
 
-    public void NextFunko() {
+    public void NextFunko()
+    {
         funko.NextFunko();
     }
 
-    public int GetCurrentFunko() {
+    public int GetCurrentFunko()
+    {
         return funko.GetCurrentFunko();
     }
 
-    public void ResetFunko() {
+    public void ResetFunko()
+    {
         funko.ResetFunko();
     }
 
     // LIGHTS RELATED METHODS
     // ALL LIGHTS
 
-    public void TurnOffLights() {
+    public void TurnOffLights()
+    {
         lightsHandler.TurnOffAllLights();
     }
 
-    public void TurnOnLights() {
+    public void TurnOnLights()
+    {
         lightsHandler.TurnOnAllLights();
     }
 
     // MISSION FAILED LIGHT
 
-    public void ToggleMissionFailedLight() {
+    public void ToggleMissionFailedLight()
+    {
         lightsHandler.ToggleMissionFailedLight();
     }
 
-    public void TurnOnMissionFailedLight() {
+    public void TurnOnLeavingLight()
+    {
         lightsHandler.TurnOnMissionFailedLight();
     }
 
-    public void TurnOffMissionFailedLight() {
+    public void TurnOffLeavingLight()
+    {
         lightsHandler.TurnOffMissionFailedLight();
     }
 
     // RELOADING LIGHT
 
-    public void ToggleReloadingLight() {
+    public void ToggleReloadingLight()
+    {
         lightsHandler.ToggleReloadingLight();
     }
 
-    public void TurnOnReloadingLight() {
+    public void TurnOnReloadingLight()
+    {
         lightsHandler.TurnOnReloadingLight();
     }
 
-    public void TurnOffReloadingLight() {
+    public void TurnOffReloadingLight()
+    {
         lightsHandler.TurnOffReloadingLight();
     }
 
     // HIT LIGHT
 
-    public void ToggleHitLight() {
+    public void ToggleHitLight()
+    {
         lightsHandler.ToggleHitLight();
     }
 
-    public void TurnOnHitLight() {
+    public void TurnOnHitLight()
+    {
         lightsHandler.TurnOnHitLight();
     }
 
-    public void TurnOffHitLight() {
+    public void TurnOffHitLight()
+    {
         lightsHandler.TurnOffHitLight();
     }
 
     // CRITICAL LIGHT
 
-    public void ToggleCriticalLight() {
+    public void ToggleCriticalLight()
+    {
         lightsHandler.ToggleCriticalLight();
     }
 
-    public void TurnOnCriticalLight() {
+    public void TurnOnCriticalLight()
+    {
         lightsHandler.TurnOnCriticalLight();
     }
 
-    public void TurnOffCriticalLight() {
+    public void TurnOffCriticalLight()
+    {
         lightsHandler.TurnOffCriticalLight();
     }
 
     // DANGER LIGHT
 
-    public void ToggleDangerLight() {
+    public void ToggleDangerLight()
+    {
         lightsHandler.ToggleDangerLight();
     }
 
-    public void TurnOnDangerLight() {
+    public void TurnOnDangerLight()
+    {
         lightsHandler.TurnOnDangerLight();
     }
 
-    public void TurnOffDangerLight() {
+    public void TurnOffDangerLight()
+    {
         lightsHandler.TurnOffDangerLight();
     }
 
     // TEST ROUTINES
 
-    private IEnumerator TestScoreRoutine() {
+    private IEnumerator TestScoreRoutine()
+    {
         Debug.Log("TestScoreRoutine started!");
         yield return new WaitForSeconds(2f);
 
-        while(true) {
+        while (true)
+        {
             yield return new WaitForSeconds(1f);
             int score = UnityEngine.Random.Range(100, 1001);
             Debug.Log("Score: " + score);
@@ -175,31 +207,41 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    private IEnumerator TestFunkoRoutine() {
+    private IEnumerator TestFunkoRoutine()
+    {
         Debug.Log("TestFunkoRoutine started!");
         yield return new WaitForSeconds(2f);
 
-        while(true) {
+        while (true)
+        {
             yield return new WaitForSeconds(2f);
 
-            if (funko.GetCurrentFunko() == 5) {
+            if (funko.GetCurrentFunko() == 5)
+            {
                 funko.ResetFunko();
-            } else {
+            }
+            else
+            {
                 funko.NextFunko();
             }
         }
     }
 
-    private IEnumerator TestPopRoutine() {
+    private IEnumerator TestPopRoutine()
+    {
         Debug.Log("TestPopRoutine started!");
         yield return new WaitForSeconds(2f);
 
-        while(true) {
+        while (true)
+        {
             yield return new WaitForSeconds(1f);
 
-            if (clearPop.GetProgress() == 1f) {
+            if (clearPop.GetProgress() == 1f)
+            {
                 RemovePopProgress(1f);
-            } else {
+            }
+            else
+            {
                 float progress = UnityEngine.Random.Range(0.01f, 0.05f);
                 Debug.Log("Progress: " + progress);
                 AddPopProgress(progress);
@@ -207,10 +249,12 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    private IEnumerator TestLedRoutine() {
+    private IEnumerator TestLedRoutine()
+    {
         Debug.Log("TestLedRoutine started!");
 
-        while(true) {
+        while (true)
+        {
             yield return new WaitForSeconds(1f);
 
             lightsHandler.ToggleMissionFailedLight();

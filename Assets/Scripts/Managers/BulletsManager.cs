@@ -12,6 +12,8 @@ public class BulletsManager : Singleton<BulletsManager>
 
     public static List<Bullet> enemyBulletsOnScreen = new List<Bullet>();
 
+    private bool popping = false;
+
     // Creare i proiettili nel BulletManager
     // BulletManager.Instance.CreateEnemyBullet() -> Crea proiettile, popola con i parametri passati (prefabProiettile, posizione, direction, speed)
     // BulletManager.Instance.CreateFriendlyBullet()
@@ -42,6 +44,21 @@ public class BulletsManager : Singleton<BulletsManager>
 
     public void RemoveBulletFromList(string bulletId)
     {
-        enemyBulletsOnScreen.RemoveAt(enemyBulletsOnScreen.FindIndex(b => b.bulletId == bulletId));
+        if (!popping)
+        {
+            int index = enemyBulletsOnScreen.FindIndex(b => b.bulletId == bulletId);
+            if (index >= 0 && index < enemyBulletsOnScreen.Count) enemyBulletsOnScreen.RemoveAt(index);
+        }
+    }
+
+    public void PopAllBullets()
+    {
+        popping = true;
+        foreach (Bullet bullet in enemyBulletsOnScreen)
+        {
+            Destroy(bullet.gameObject);
+        }
+        enemyBulletsOnScreen.Clear();
+        popping = false;
     }
 }

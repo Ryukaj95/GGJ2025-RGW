@@ -28,18 +28,20 @@ public class BackgroundManager : Singleton<BackgroundManager>
         background2.transform.position += new Vector3(0, -scrollSpeed * Time.deltaTime, 0);
     }
 
-    private void PutScolledBackgroundOnTopOfOther(GameObject background) {
-        Debug.Log("BackgroundManager: PutScolledBackgroundOnTopOfOther");
-        Debug.Log(isBackground1OnTop);
+    private void PutScolledBackgroundOnTopOfOther(GameObject background)
+    {
 
-        if (isBackground1OnTop) {
+        if (isBackground1OnTop)
+        {
             isBackground1OnTop = false;
             background1.transform.position = new Vector3(
                 background2.transform.position.x,
                 background2.transform.position.y + backgroundSize,
                 background2.transform.position.z
             );
-        } else {
+        }
+        else
+        {
             background2.transform.position = new Vector3(
                 background1.transform.position.x,
                 background1.transform.position.y + backgroundSize,
@@ -48,8 +50,15 @@ public class BackgroundManager : Singleton<BackgroundManager>
             isBackground1OnTop = true;
         }
     }
-    
-    public void HandleScrolledBackground(GameObject background) {
+
+    public void HandleScrolledBackground(GameObject background)
+    {
         PutScolledBackgroundOnTopOfOther(background);
+    }
+
+    public void UpdateBackground(Sprite newSprite)
+    {
+        background1.GetComponent<SpriteRenderer>().sprite = newSprite;
+        background2.GetComponent<SpriteRenderer>().sprite = newSprite;
     }
 }

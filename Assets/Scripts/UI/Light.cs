@@ -5,42 +5,51 @@ using UnityEngine;
 
 public class Light : MonoBehaviour
 {
-    [SerializeField] private Color offColor;
+    [SerializeField] private Color offColor = new Color(120, 120, 120);
     [SerializeField] private Color onColor;
 
-    private Image ledLight;
+    [SerializeField] private Image ledLight;
 
     bool isOn = false;
 
-    private void Awake() {
-        ledLight = GetComponent<Image>();
+    private void Awake()
+    {
+        if (!ledLight) ledLight = GetComponent<Image>();
 
         TurnOff();
 
         // StartCoroutine(TestLight());
     }
 
-    public void ToggleLight() {
-        if (isOn) {
+    public void ToggleLight()
+    {
+        if (isOn)
+        {
             TurnOff();
-        } else {
+        }
+        else
+        {
             TurnOn();
         }
     }
 
-    public void TurnOn() {
+    public void TurnOn()
+    {
         isOn = true;
         ledLight.color = onColor;
     }
 
-    public void TurnOff() {
+    public void TurnOff()
+    {
         isOn = false;
         ledLight.color = offColor;
     }
 
-    private IEnumerator TestLight() {
+    private IEnumerator TestLight()
+    {
         Debug.Log("TestLight: Start");
-        while (true) {
+        while (true)
+        {
             yield return new WaitForSeconds(1f);
             Debug.Log("TestLight: ToggleLight");
 
