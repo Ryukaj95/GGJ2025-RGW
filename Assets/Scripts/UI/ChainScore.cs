@@ -8,6 +8,7 @@ public class ChainScore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI chainScoreText;
 
     private int chainScore = 0;
+    private string chainScoreStr => chainScore.ToString("D3") + "!";
 
     private void Awake() {
         ResetChainScore();
@@ -17,17 +18,17 @@ public class ChainScore : MonoBehaviour
 
     public void ResetChainScore() {
         chainScore = 0;
-        chainScoreText.text = chainScore.ToString();
+        chainScoreText.text = chainScoreStr;
     }
 
     public void AddChainScore(int value) {
         chainScore += value;
-        chainScoreText.text = chainScore.ToString();
+        chainScoreText.text = chainScoreStr;
     }
 
     public void SetChainScore(int value) {
         chainScore = value;
-        chainScoreText.text = chainScore.ToString();
+        chainScoreText.text = chainScoreStr;
     }
 
     public int GetChainScore() {
