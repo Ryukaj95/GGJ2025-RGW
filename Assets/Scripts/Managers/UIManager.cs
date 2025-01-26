@@ -25,12 +25,12 @@ public class UIManager : Singleton<UIManager>
 
     private void StartTestsUI()
     {
-        StartCoroutine(TestScoreRoutine());
-        StartCoroutine(TestFunkoRoutine());
-        StartCoroutine(TestPopRoutine());
-        StartCoroutine(TestLedRoutine());
-        StartCoroutine(TestGreetMessageRoutine());
-        StartCoroutine(TestChainScoreRoutine());
+        // StartCoroutine(TestScoreRoutine());
+        // StartCoroutine(TestFunkoRoutine());
+        // StartCoroutine(TestPopRoutine());
+        // StartCoroutine(TestLedRoutine());
+        // StartCoroutine(TestGreetMessageRoutine());
+        // StartCoroutine(TestChainScoreRoutine());
     }
 
     // SCORE RELATED METHODS
@@ -84,7 +84,7 @@ public class UIManager : Singleton<UIManager>
 
     public void SetFunko(int _value)
     {
-        int value = Math.Clamp(_value, 0, 5);
+        funko.SetFunko(Math.Clamp(_value, 0, 5));
     }
 
     public void NextFunko()
@@ -321,37 +321,37 @@ public class UIManager : Singleton<UIManager>
 
             yield return Speak("How are you?");
             yield return new WaitForSeconds(1f);
-            
+
             yield return Speak("I'm fine, thank you!");
             yield return new WaitForSeconds(1f);
-            
+
             yield return Speak("A very long message to test the multiline in the box!");
             yield return new WaitForSeconds(1f);
         }
     }
 
-    private IEnumerator TestChainScoreRoutine()
-    {
-        Debug.Log("TestChainScoreRoutine started!");
-        yield return new WaitForSeconds(2f);
+    // private IEnumerator TestChainScoreRoutine()
+    // {
+    //     Debug.Log("TestChainScoreRoutine started!");
+    //     yield return new WaitForSeconds(2f);
 
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
+    //     while (true)
+    //     {
+    //         yield return new WaitForSeconds(1f);
 
-            AddChainScore(10);
-            yield return new WaitForSeconds(1f);
+    //         AddChainScore(10);
+    //         yield return new WaitForSeconds(1f);
 
-            AddChainScore(20);
-            yield return new WaitForSeconds(1f);
+    //         AddChainScore(20);
+    //         yield return new WaitForSeconds(1f);
 
-            AddChainScore(30);
-            yield return new WaitForSeconds(1f);
+    //         AddChainScore(30);
+    //         yield return new WaitForSeconds(1f);
 
-            SetChainScore(100);
-            yield return new WaitForSeconds(1f);
+    //         SetChainScore(100);
+    //         yield return new WaitForSeconds(1f);
 
-            ResetChainScore();
-        }
-    }
+    //         ResetChainScore();
+    //     }
+    // }
 }

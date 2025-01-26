@@ -14,8 +14,5 @@ public class StageData : ScriptableObject
     public DialogueScriptableObj endDialogue;
 
     public int finalScore;
-
-    public Sprite dialogueBG;
-
     public Sprite stageBG;
 }

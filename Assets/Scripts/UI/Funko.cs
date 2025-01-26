@@ -17,7 +17,8 @@ public class Funko : MonoBehaviour
     // This goes from 0 to 5
     private int currentFunko;
 
-    private void Awake() {
+    private void Awake()
+    {
         Funko0.SetActive(true);
         Funko1.SetActive(false);
         Funko2.SetActive(false);
@@ -31,23 +32,28 @@ public class Funko : MonoBehaviour
         // StartCoroutine(TestFunko());
     }
 
-    private void Start() {
+    private void Start()
+    {
         currentFunkoObject = Funko0;
         currentFunko = 0;
     }
-    
-    public void NextFunko() {
-        if (currentFunko == 5) {
+
+    public void NextFunko()
+    {
+        if (currentFunko == 5)
+        {
             return;
         }
 
-        if (currentFunko != 0) {
+        if (currentFunko != 0)
+        {
             currentFunkoObject.SetActive(false);
         }
 
         currentFunko++;
 
-        switch (currentFunko) {
+        switch (currentFunko)
+        {
             case 1:
                 currentFunkoObject = Funko1;
                 break;
@@ -68,8 +74,10 @@ public class Funko : MonoBehaviour
         currentFunkoObject.SetActive(true);
     }
 
-    public void ResetFunko() {
-        if (currentFunko == 0) {
+    public void ResetFunko()
+    {
+        if (currentFunko == 0)
+        {
             return;
         }
 
@@ -79,19 +87,23 @@ public class Funko : MonoBehaviour
         currentFunkoObject.SetActive(true);
     }
 
-    public void SetFunko(int funkoNumber) {
-        if (funkoNumber < 0 || funkoNumber > 5) {
+    public void SetFunko(int funkoNumber)
+    {
+        if (funkoNumber < 0 || funkoNumber > 5)
+        {
             return;
         }
 
-        if (funkoNumber == currentFunko) {
+        if (funkoNumber == currentFunko)
+        {
             return;
         }
 
         currentFunkoObject.SetActive(false);
         currentFunko = funkoNumber;
 
-        switch (currentFunko) {
+        switch (currentFunko)
+        {
             case 0:
                 currentFunkoObject = Funko0;
                 break;
@@ -111,19 +123,26 @@ public class Funko : MonoBehaviour
                 currentFunkoObject = Funko5;
                 break;
         }
+        currentFunkoObject.SetActive(true);
     }
 
-    public int GetCurrentFunko() {
+    public int GetCurrentFunko()
+    {
         return currentFunko;
     }
 
-    private IEnumerator TestFunko() {
-        while (true) {
+    private IEnumerator TestFunko()
+    {
+        while (true)
+        {
             yield return new WaitForSeconds(2f);
 
-            if (currentFunko == 5) {
+            if (currentFunko == 5)
+            {
                 ResetFunko();
-            } else {
+            }
+            else
+            {
                 NextFunko();
             }
         }

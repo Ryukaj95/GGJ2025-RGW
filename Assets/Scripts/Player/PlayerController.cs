@@ -8,6 +8,9 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private float startMoveSpeed = 4f;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private SpriteRenderer popSpriteRender;
+
     private bool isInvincible = false;
 
     private Vector2 spawnPosition;
@@ -27,6 +30,9 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private Weapon playerWeapon;
 
     [SerializeField] public Collider2D grazeRange;
+
+    [SerializeField] private Sprite[] popSprites;
+
 
     [Range(0, 100)]
     public float popCharge = 0;
@@ -165,7 +171,20 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
         {
             popUses--;
             popCharge = 0;
+            StartCoroutine(PopAnimation());
             BulletsManager.Instance.PopAllBullets();
         }
+    }
+
+    public IEnumerator PopAnimation()
+    {
+        isInvincible = true;
+        //sprite arcobaleno
+        popSpriteRender.sprite = popSprites[0];
+        yield return new WaitForSeconds(0.5f);
+        popSpriteRender.sprite = popSprites[1];
+        yield return new WaitForSeconds(0.5f);
+        popSpriteRender.sprite = null;
+        isInvincible = false;
     }
 }

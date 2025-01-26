@@ -54,7 +54,7 @@ public class StageManager : Singleton<StageManager>
     {
         ResetScore();
         UIManager.Instance.TurnOffLights();
-        if (CurrentStage.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.dialogueBG);
+        if (CurrentStage.startDialogue.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.startDialogue.dialogueBG);
         if (CurrentStage.stageBG != null) BackgroundManager.Instance.UpdateBackground(CurrentStage.stageBG);
         if (CurrentStage.startDialogue != null)
         {
@@ -69,6 +69,8 @@ public class StageManager : Singleton<StageManager>
     public void Update()
     {
         UIManager.Instance.SetScore(score);
+        UIManager.Instance.SetChainScore(hitChain);
+        CalculateFunkoScore();
     }
 
     public void FixedUpdate()
@@ -86,6 +88,7 @@ public class StageManager : Singleton<StageManager>
         yield return new WaitForSeconds(2f);
         if (CurrentStage.endDialogue != null)
         {
+            if (CurrentStage.endDialogue.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.endDialogue.dialogueBG);
             yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.endDialogue);
         }
         stopShooting = true;
@@ -120,14 +123,14 @@ public class StageManager : Singleton<StageManager>
         UIManager.Instance.SetScore(score);
     }
 
-    public void AddKill() {
+    public void AddKill()
+    {
         kills++;
-        UIManager.Instance.SetChainScore(kills);
     }
 
-    public void ResetKills() {
+    public void ResetKills()
+    {
         kills = 0;
-        UIManager.Instance.SetChainScore(kills);
     }
 
     public void ResetScore()
@@ -138,5 +141,41 @@ public class StageManager : Singleton<StageManager>
         kills = 0;
         globalTime = 0;
     }
+
+    public void CalculateFunkoScore()
+    {
+        double funkoScore = Math.Truncate(score * 2 + graze + (300 - globalTime) * 100 + kills * 100 + hitChain * 500) * PlayerController.Instance.health;
+
+        if (funkoScore < 25000)
+        {
+            UIManager.Instance.SetFunko(1);
+        }
+        else if (funkoScore > 25000 && funkoScore < 50000)
+        {
+            UIManager.Instance.SetFunko(2);
+        }
+        else if (funkoScore > 50000 && funkoScore < 70000)
+        {
+            UIManager.Instance.SetFunko(2);
+        }
+        else if (funkoScore > 70000 && funkoScore < 100000)
+        {
+            UIManager.Instance.SetFunko(3);
+        }
+        else if (funkoScore > 100000 && funkoScore < 150000)
+        {
+            UIManager.Instance.SetFunko(4);
+        }
+        else if (funkoScore > 150000)
+        {
+            UIManager.Instance.SetFunko(5);
+        }
+        else
+        {
+            UIManager.Instance.SetFunko(0);
+        }
+        Debug.Log("FUNKO SCORE: " + funkoScore);
+    }
+
 
 }
