@@ -49,7 +49,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
     private void FixedUpdate()
     {
-        Debug.Log(isInvincible);
+        // Debug.Log(isInvincible);
         Move();
     }
 
