@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: DialogueTextCharacterName
   m_EditorClassIdentifier: 
-  hashCode: 143791370
+  hashCode: 1026887515
   material: {fileID: 4573637374179234142}
-  materialHashCode: -1046332566
+  materialHashCode: -357062245
   m_Version: 1.1.0
   m_SourceFontFileGUID: a4ecbd2defb118a4183f29dca31247bc
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: a4ecbd2defb118a4183f29dca31247bc, type: 3}
@@ -2414,7 +2414,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - GLOW_ON
   - UNDERLAY_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
