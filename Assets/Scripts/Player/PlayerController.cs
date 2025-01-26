@@ -46,7 +46,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private void OnEnable()
     {
         spawnPosition = this.transform.position;
-
+        UIManager.Instance.SetPopProgress(0f);
         playerControls.Enable();
     }
 
@@ -63,7 +63,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private void FixedUpdate()
     {
         if (!damageAnim) Move();
-        UpdatePopProgress();
+        if (!StageManager.Instance.isPaused) UpdatePopProgress();
     }
 
     public void UpdatePopProgress()
@@ -74,7 +74,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
             popUses = Math.Clamp(popUses + 1, 0, 3);
         }
         float popProgressBar = Math.Clamp((popUses + popCharge / 100) / 3, 0f, 1f);
-        // CALL UI MANAGER
+        UIManager.Instance.SetPopProgress(popProgressBar);
     }
 
     private void PlayerInput()
@@ -103,16 +103,23 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
         {
             health -= damage;
             StartCoroutine(DeathAnimation());
+            if (health == 1) UIManager.Instance.TurnOnCriticalLight();
+            else if (health == 2) UIManager.Instance.TurnOnDangerLight();
+            else
+            {
+                UIManager.Instance.TurnOffCriticalLight();
+                UIManager.Instance.TurnOffCriticalLight();
+            }
             if (health <= 0)
             {
                 StageManager.Instance.Lose();
-                // LOSE
             }
         }
     }
 
     public IEnumerator DeathAnimation()
     {
+        UIManager.Instance.TurnOnHitLight();
         isInvincible = true;
         damageAnim = true;
         do
@@ -131,6 +138,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
             yield return new WaitForSeconds(0.3f);
         } while (spriteIndex > 0);
         damageAnim = false;
+        UIManager.Instance.TurnOffHitLight();
         BulletsManager.Instance.PopAllBullets();
         StartCoroutine(InvincibleRespawn());
     }

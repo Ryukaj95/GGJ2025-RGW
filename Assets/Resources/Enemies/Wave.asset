@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Wave
   m_EditorClassIdentifier: 
   isRandom: 1
-  isLooping: 0
+  isLooping: 1
   spawnRate: 2
   enemies:
-  - {fileID: 11400000, guid: 9dba285de18c14e4796ecd1fd194e27a, type: 2}
-  - {fileID: 11400000, guid: 9dba285de18c14e4796ecd1fd194e27a, type: 2}
   - {fileID: 11400000, guid: 8b341f65319179b479e77da0a7ca6edc, type: 2}
+  - {fileID: 11400000, guid: 9dba285de18c14e4796ecd1fd194e27a, type: 2}
+  - {fileID: 11400000, guid: df867ded4149c72419ac864bde63a6c8, type: 2}
   isBossWave: 0
   timer: 300

@@ -103,7 +103,7 @@ MonoBehaviour:
   bulletId: 
   isFriendlyToPlayer: 0
   damage: 1
-  bulletSpeed: 2
+  bulletSpeed: 3
   boostSettings:
     doesBoost: 0
     bulletSpeedAfterBoost: 3

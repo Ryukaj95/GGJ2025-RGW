@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8949867962488592547}
   - component: {fileID: 3845197333099365302}
   m_Layer: 0
-  m_Name: Spheres
+  m_Name: Spheres - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   bulletId: 
   isFriendlyToPlayer: 0
   damage: 1
-  bulletSpeed: 2
+  bulletSpeed: 1
   boostSettings:
     doesBoost: 0
     bulletSpeedAfterBoost: 3

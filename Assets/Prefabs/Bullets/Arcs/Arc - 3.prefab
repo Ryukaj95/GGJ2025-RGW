@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8949867962488592547}
   - component: {fileID: 3845197333099365302}
   m_Layer: 0
-  m_Name: Arrow - Basic
+  m_Name: Arc - 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 61e7f6a8513dcda4399dd73559f6acfa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab1af2b9e838f0c45b63f7225f3fede8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,12 +103,12 @@ MonoBehaviour:
   bulletId: 
   isFriendlyToPlayer: 0
   damage: 1
-  bulletSpeed: 4
+  bulletSpeed: 3
   boostSettings:
-    doesBoost: 0
-    bulletSpeedAfterBoost: 3
+    doesBoost: 1
+    bulletSpeedAfterBoost: 1
     accelaration: 1
-    countdown: 3
+    countdown: 2
 --- !u!50 &5646233081120712887
 Rigidbody2D:
   serializedVersion: 4

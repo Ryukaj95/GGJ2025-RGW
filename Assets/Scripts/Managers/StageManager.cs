@@ -35,7 +35,7 @@ public class StageManager : Singleton<StageManager>
     public StageData CurrentStage => stages[stageIndex];
 
     [Header("RATING")]
-    [SerializeField] public float time = 300;
+    [SerializeField] public float globalTime = 0;
     [SerializeField] public int hitChain = 0;
     [SerializeField] public int score = 0;
     [SerializeField] public int graze = 0;
@@ -52,6 +52,8 @@ public class StageManager : Singleton<StageManager>
 
     public IEnumerator StartStage()
     {
+        ResetScore();
+        UIManager.Instance.TurnOffLights();
         if (CurrentStage.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.dialogueBG);
         if (CurrentStage.stageBG != null) BackgroundManager.Instance.UpdateBackground(CurrentStage.stageBG);
         if (CurrentStage.startDialogue != null)
@@ -59,29 +61,28 @@ public class StageManager : Singleton<StageManager>
             yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.startDialogue);
         }
         stopShooting = false;
+        isPaused = false;
         WaveManager.Instance.waves = CurrentStage.waves;
         WaveManager.Instance.StartWave();
     }
 
     public void Update()
     {
+        UIManager.Instance.SetScore(score);
+    }
+
+    public void FixedUpdate()
+    {
         if (!isPaused)
         {
-            time -= Time.deltaTime;
-            if (time < 0)
-            {
-                isPaused = true;
-                StartCoroutine(EndStage());
-            }
-            float minutes = Mathf.FloorToInt(time / 60);
-            float seconds = Mathf.FloorToInt(time % 60);
+            globalTime += Time.deltaTime;
 
-            //Debug.Log(minutes + ":" + seconds); // Da mostrare a schermo
         }
     }
 
     public IEnumerator EndStage()
     {
+        UIManager.Instance.TurnOnLeavingLight();
         yield return new WaitForSeconds(2f);
         if (CurrentStage.endDialogue != null)
         {
@@ -116,6 +117,15 @@ public class StageManager : Singleton<StageManager>
     public void AddPoints(int points)
     {
         score += points;
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        graze = 0;
+        hitChain = 0;
+        kills = 0;
+        globalTime = 0;
     }
 
 }

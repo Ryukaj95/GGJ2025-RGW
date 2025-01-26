@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8949867962488592547}
   - component: {fileID: 3845197333099365302}
   m_Layer: 0
-  m_Name: Diamond Strong
+  m_Name: Spheres 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 895b62441008a664f82844524d8efb85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91b20ee0c008d3f4f983074dc2a2ff94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   bulletId: 
   isFriendlyToPlayer: 0
   damage: 1
-  bulletSpeed: 4
+  bulletSpeed: 2
   boostSettings:
     doesBoost: 0
     bulletSpeedAfterBoost: 3
