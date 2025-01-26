@@ -117,6 +117,17 @@ public class StageManager : Singleton<StageManager>
     public void AddPoints(int points)
     {
         score += points;
+        UIManager.Instance.SetScore(score);
+    }
+
+    public void AddKill() {
+        kills++;
+        UIManager.Instance.SetChainScore(kills);
+    }
+
+    public void ResetKills() {
+        kills = 0;
+        UIManager.Instance.SetChainScore(kills);
     }
 
     public void ResetScore()

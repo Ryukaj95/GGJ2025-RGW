@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator DeathAnimation()
     {
-        StageManager.Instance.kills += 1;
+        StageManager.Instance.AddKill();
         enemyPathing.SetMove(false);
         do
         {

@@ -133,6 +133,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &251142115 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3077273673288098522, guid: daf5bad49b5093d4b9880ee8a1a786a6, type: 3}
+  m_PrefabInstance: {fileID: 1733550921594404657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54a948e298a8a49abcb494c19dddc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &489416797
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +235,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c035b0c79a35cdf47b1a970ea4c1ea11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &859577120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 925515879512722726, guid: daf5bad49b5093d4b9880ee8a1a786a6, type: 3}
+  m_PrefabInstance: {fileID: 1733550921594404657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdc12df7c23cbd4e9ca3a239975bc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1042553561
@@ -732,6 +754,14 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 32137374}
+    - target: {fileID: 1397870617080482745, guid: 0100159c484dc4746ba3cabeccdcdf96, type: 3}
+      propertyPath: chainScore
+      value: 
+      objectReference: {fileID: 859577120}
+    - target: {fileID: 1397870617080482745, guid: 0100159c484dc4746ba3cabeccdcdf96, type: 3}
+      propertyPath: greetMessage
+      value: 
+      objectReference: {fileID: 251142115}
     - target: {fileID: 1397870617080482745, guid: 0100159c484dc4746ba3cabeccdcdf96, type: 3}
       propertyPath: lightsHandler
       value: 

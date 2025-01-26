@@ -9,6 +9,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private ClearPop clearPop;
     [SerializeField] private Funko funko;
     [SerializeField] private LightsHandler lightsHandler;
+    [SerializeField] private GreetMessage greetMessage;
+    [SerializeField] private ChainScore chainScore;
 
     private int score = 0;
 
@@ -18,10 +20,17 @@ public class UIManager : Singleton<UIManager>
     {
         base.Awake();
 
-        // StartCoroutine(TestScoreRoutine());
-        // StartCoroutine(TestFunkoRoutine());
-        // StartCoroutine(TestPopRoutine());
-        // StartCoroutine(TestLedRoutine());
+        // StartTestsUI();
+    }
+
+    private void StartTestsUI()
+    {
+        StartCoroutine(TestScoreRoutine());
+        StartCoroutine(TestFunkoRoutine());
+        StartCoroutine(TestPopRoutine());
+        StartCoroutine(TestLedRoutine());
+        StartCoroutine(TestGreetMessageRoutine());
+        StartCoroutine(TestChainScoreRoutine());
     }
 
     // SCORE RELATED METHODS
@@ -191,6 +200,40 @@ public class UIManager : Singleton<UIManager>
         lightsHandler.TurnOffDangerLight();
     }
 
+    // GREET MESSAGE RELATED METHODS
+
+    public IEnumerator Speak(string text)
+    {
+        return greetMessage.Speak(text);
+    }
+
+    public void ClearGreetMessage()
+    {
+        greetMessage.ClearGreetMessage();
+    }
+
+    // CHAIN SCORE RELATED METHODS
+
+    public void ResetChainScore()
+    {
+        chainScore.ResetChainScore();
+    }
+
+    public void AddChainScore(int value)
+    {
+        chainScore.AddChainScore(value);
+    }
+
+    public void SetChainScore(int value)
+    {
+        chainScore.SetChainScore(value);
+    }
+
+    public int GetChainScore()
+    {
+        return chainScore.GetChainScore();
+    }
+
     // TEST ROUTINES
 
     private IEnumerator TestScoreRoutine()
@@ -265,4 +308,50 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    private IEnumerator TestGreetMessageRoutine()
+    {
+        Debug.Log("TestGreetMessageRoutine started!");
+
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+
+            yield return Speak("Hello, World!");
+            yield return new WaitForSeconds(1f);
+
+            yield return Speak("How are you?");
+            yield return new WaitForSeconds(1f);
+            
+            yield return Speak("I'm fine, thank you!");
+            yield return new WaitForSeconds(1f);
+            
+            yield return Speak("A very long message to test the multiline in the box!");
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private IEnumerator TestChainScoreRoutine()
+    {
+        Debug.Log("TestChainScoreRoutine started!");
+        yield return new WaitForSeconds(2f);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            AddChainScore(10);
+            yield return new WaitForSeconds(1f);
+
+            AddChainScore(20);
+            yield return new WaitForSeconds(1f);
+
+            AddChainScore(30);
+            yield return new WaitForSeconds(1f);
+
+            SetChainScore(100);
+            yield return new WaitForSeconds(1f);
+
+            ResetChainScore();
+        }
+    }
 }
