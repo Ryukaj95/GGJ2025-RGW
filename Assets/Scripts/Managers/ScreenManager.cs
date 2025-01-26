@@ -1,5 +1,3 @@
-using UnityEditor.SearchService;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScenesManager : Singleton<ScenesManager>
