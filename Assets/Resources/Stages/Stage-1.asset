@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Stage-1
   m_EditorClassIdentifier: 
   stageName: STAGE 1
-  startDialogue: {fileID: 11400000, guid: 207c961d57ab05c4e810de87e41d04b2, type: 2}
+  startDialogue: {fileID: 11400000, guid: 5601a090b98816142a70b7f877cedebc, type: 2}
   waves:
   - {fileID: 11400000, guid: db0be45b7b24a984bb735843f98cbd2a, type: 2}
-  endDialogue: {fileID: 11400000, guid: 207c961d57ab05c4e810de87e41d04b2, type: 2}
+  endDialogue: {fileID: 11400000, guid: 5601a090b98816142a70b7f877cedebc, type: 2}
   finalScore: 0
-  dialogueBG: {fileID: 21300000, guid: c075f4fc77e133943833a8fc54c28884, type: 3}
   stageBG: {fileID: 21300000, guid: a497a8e3ea2b0f9479c3fdce5f6e3463, type: 3}

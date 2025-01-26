@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveManager : Singleton<WaveManager>
@@ -21,6 +22,8 @@ public class WaveManager : Singleton<WaveManager>
 
     [SerializeField] private bool isEndless = false;
 
+    [SerializeField] public bool wavesFinished = false;
+
     public void NextWave()
     {
         StageManager.Instance.stopShooting = false;
@@ -33,7 +36,7 @@ public class WaveManager : Singleton<WaveManager>
         }
         else
         {
-            StartCoroutine(StageManager.Instance.EndStage());
+            wavesFinished = true;
         }
     }
 
@@ -125,6 +128,17 @@ public class WaveManager : Singleton<WaveManager>
         {
             EndWave();
         }
+    }
+
+    public void Reset()
+    {
+        currentWaveIndex = 0;
+        started = false;
+        timer = 300;
+        spawnQueue = new List<EnemyData>();
+        currentEnemies = new List<EnemyController>();
+        isEndless = false;
+        wavesFinished = false;
     }
 
     public void SpawnEnemy(GameObject enemyObj, Vector2 spawnPosition, EnemyData enemyData)

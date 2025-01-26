@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EndGameScore : MonoBehaviour
+public class EndGameScore : Singleton<EndGameScore>
 {
     [SerializeField] private TextMeshProUGUI killsText;
     [SerializeField] private TextMeshProUGUI livesLeftText;
@@ -12,39 +12,47 @@ public class EndGameScore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI raingText;
     [SerializeField] private TextMeshProUGUI finalScoreText;
 
-    private void Awake() {
+    private void OnEnable()
+    {
         ClearAll();
 
-        StartCoroutine(TestEndGameScoreRoutine());
+        //StartCoroutine(TestEndGameScoreRoutine());
     }
 
-    public void SetKills(int value) {
+    public void SetKills(int value)
+    {
         killsText.text = value.ToString();
     }
 
-    public void SetLivesLeft(int value) {
+    public void SetLivesLeft(int value)
+    {
         livesLeftText.text = value.ToString();
     }
 
-    public void SetGraze(int value) {
+    public void SetGraze(int value)
+    {
         grazeText.text = value.ToString();
     }
 
     // Time is in milliseconds
-    public void SetTime(int value) {
+    public void SetTime(int value)
+    {
         System.TimeSpan timeSpan = System.TimeSpan.FromMilliseconds(value);
         timeText.text = timeSpan.ToString(@"mm\:ss\.ff");
     }
 
-    public void SetRating(string value) {
+    public void SetRating(string value)
+    {
         raingText.text = value;
     }
 
-    public void SetFinalScore(int value) {
+    public void SetFinalScore(int value)
+    {
         finalScoreText.text = value.ToString("D9");
     }
 
-    public void SetAll(int kills, int livesLeft, int graze, int time, string rating, int finalScore) {
+    public void SetAll(int kills, int livesLeft, int graze, int time, string rating, int finalScore)
+    {
         SetKills(kills);
         SetLivesLeft(livesLeft);
         SetGraze(graze);
@@ -53,7 +61,8 @@ public class EndGameScore : MonoBehaviour
         SetFinalScore(finalScore);
     }
 
-    public void ClearAll() {
+    public void ClearAll()
+    {
         killsText.text = "";
         livesLeftText.text = "";
         grazeText.text = "";
@@ -62,7 +71,8 @@ public class EndGameScore : MonoBehaviour
         finalScoreText.text = "";
     }
 
-    private IEnumerator TestEndGameScoreRoutine() {
+    private IEnumerator TestEndGameScoreRoutine()
+    {
         yield return new WaitForSeconds(1f);
 
         SetAll(10, 3, 20, 1345600, "A", 16000);

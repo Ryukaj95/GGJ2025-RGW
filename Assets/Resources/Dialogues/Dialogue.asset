@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b669c798c72692e4eb6732e19dde9fce, type: 3}
   m_Name: Dialogue
   m_EditorClassIdentifier: 
+  dialogueBG: {fileID: 21300000, guid: f9e78ef4e96863b4191ca621fafca09f, type: 3}
   dialogs:
   - characterName: Shad
     dialogueText: You can't save her!

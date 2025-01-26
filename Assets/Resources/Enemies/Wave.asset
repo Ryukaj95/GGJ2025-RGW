@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave
   m_EditorClassIdentifier: 
   isRandom: 1
-  isLooping: 1
+  isLooping: 0
   spawnRate: 2
   enemies:
   - {fileID: 11400000, guid: 8b341f65319179b479e77da0a7ca6edc, type: 2}

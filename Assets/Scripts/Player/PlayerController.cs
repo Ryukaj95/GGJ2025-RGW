@@ -18,7 +18,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     [SerializeField] private Sprite[] playerSprites;
     [SerializeField] private int spriteIndex = 0;
 
-    private PlayerControls playerControls;
+    public PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
     private float moveSpeed;

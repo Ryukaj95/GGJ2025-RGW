@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -34,6 +35,8 @@ public class StageManager : Singleton<StageManager>
 
     public StageData CurrentStage => stages[stageIndex];
 
+    [SerializeField] public bool spacePressed = false;
+
     [Header("RATING")]
     [SerializeField] public float globalTime = 0;
     [SerializeField] public int hitChain = 0;
@@ -41,9 +44,12 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public int graze = 0;
     [SerializeField] public int kills = 0;
 
+    [SerializeField] public Canvas endScoreCanvas;
+    [SerializeField] public EndGameScore endGameScore;
 
     public void Start()
     {
+        endScoreCanvas.enabled = false;
         isPaused = true;
         stopShooting = true;
         StartCoroutine(StartStage());
@@ -52,7 +58,9 @@ public class StageManager : Singleton<StageManager>
 
     public IEnumerator StartStage()
     {
+        isPaused = true;
         ResetScore();
+        endGameScore.ClearAll();
         UIManager.Instance.TurnOffLights();
         if (CurrentStage.startDialogue.dialogueBG != null) DialogueManager.Instance.UpdateBackground(CurrentStage.startDialogue.dialogueBG);
         if (CurrentStage.stageBG != null) BackgroundManager.Instance.UpdateBackground(CurrentStage.stageBG);
@@ -64,10 +72,15 @@ public class StageManager : Singleton<StageManager>
         isPaused = false;
         WaveManager.Instance.waves = CurrentStage.waves;
         WaveManager.Instance.StartWave();
+
+        yield return new WaitUntil(() => WaveManager.Instance.wavesFinished);
+        StartCoroutine(EndStage());
     }
 
     public void Update()
     {
+        PlayerController.Instance.playerControls.Combat.Shoot.performed += _ => spacePressed = true;
+        PlayerController.Instance.playerControls.Combat.Shoot.canceled += _ => spacePressed = false;
         UIManager.Instance.SetScore(score);
         UIManager.Instance.SetChainScore(hitChain);
         CalculateFunkoScore();
@@ -78,13 +91,13 @@ public class StageManager : Singleton<StageManager>
         if (!isPaused)
         {
             globalTime += Time.deltaTime;
-
         }
     }
 
     public IEnumerator EndStage()
     {
         UIManager.Instance.TurnOnLeavingLight();
+        isPaused = true;
         yield return new WaitForSeconds(2f);
         if (CurrentStage.endDialogue != null)
         {
@@ -92,14 +105,17 @@ public class StageManager : Singleton<StageManager>
             yield return CutsceneManager.Instance.JumpstartDialogue(CurrentStage.endDialogue);
         }
         stopShooting = true;
-        if (stageIndex == stages.Count - 1)
+        yield return StartCoroutine(ShowScores());
+        WaveManager.Instance.Reset();
+        Debug.Log("Ended Stage: " + stageIndex);
+        stageIndex++;
+        if (stageIndex < stages.Count)
         {
-            Win();
+            StartCoroutine(StartStage());
         }
         else
         {
-            stageIndex++;
-            StartCoroutine(StartStage());
+            Win();
         }
     }
 
@@ -110,6 +126,41 @@ public class StageManager : Singleton<StageManager>
     public void Win()
     {
         Debug.Log("WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
+    }
+
+    public IEnumerator ShowScores()
+    {
+        endScoreCanvas.enabled = true;
+        string rating = "F";
+        int currentFunkoLvl = UIManager.Instance.GetCurrentFunko();
+        if (currentFunkoLvl == 0)
+        {
+            rating = "F";
+        }
+        else if (currentFunkoLvl == 1)
+        {
+            rating = "D";
+        }
+        else if (currentFunkoLvl == 2)
+        {
+            rating = "C";
+        }
+        else if (currentFunkoLvl == 3)
+        {
+            rating = "B";
+        }
+        else if (currentFunkoLvl == 4)
+        {
+            rating = "A";
+        }
+        else if (currentFunkoLvl == 5)
+        {
+            rating = "S";
+        }
+        int time = (int)globalTime * 1000;
+        endGameScore.SetAll(kills, PlayerController.Instance.health, graze, time, rating, score);
+        yield return new WaitUntil(() => spacePressed);
+        endScoreCanvas.enabled = false;
     }
 
     public void DropPoints(UnityEngine.Vector2 pos)
@@ -174,7 +225,6 @@ public class StageManager : Singleton<StageManager>
         {
             UIManager.Instance.SetFunko(0);
         }
-        Debug.Log("FUNKO SCORE: " + funkoScore);
     }
 
 
