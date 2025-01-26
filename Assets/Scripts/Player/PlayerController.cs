@@ -101,6 +101,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     {
         if (!isInvincible)
         {
+            StageManager.Instance.ResetKills();
             health -= damage;
             StartCoroutine(DeathAnimation());
             if (health == 1) UIManager.Instance.TurnOnCriticalLight();

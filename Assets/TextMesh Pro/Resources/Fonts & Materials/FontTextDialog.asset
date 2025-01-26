@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: 04B_20__ SDF
+  m_Name: FontTextDialog
   m_EditorClassIdentifier: 
-  hashCode: 143791370
+  hashCode: -481753946
   material: {fileID: 4573637374179234142}
-  materialHashCode: -1046332566
+  materialHashCode: -459735610
   m_Version: 1.1.0
   m_SourceFontFileGUID: a4ecbd2defb118a4183f29dca31247bc
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: a4ecbd2defb118a4183f29dca31247bc, type: 3}
@@ -2503,10 +2503,10 @@ Material:
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
-    - _FaceColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+    - _FaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlowColor: {r: 0.58694476, g: 1.1866374, b: 0.6361115, a: 1}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
