@@ -37,6 +37,8 @@ public class StageManager : Singleton<StageManager>
 
     [SerializeField] public bool spacePressed = false;
 
+    [SerializeField] GameObject credits;
+
     [Header("RATING")]
     [SerializeField] public float globalTime = 0;
     [SerializeField] public int hitChain = 0;
@@ -54,6 +56,8 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public AudioClip endingLevel;
 
     [SerializeField] public AudioClip startUp;
+
+
 
     public void Start()
     {
@@ -135,7 +139,8 @@ public class StageManager : Singleton<StageManager>
     }
     public void Win()
     {
-        Debug.Log("WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
+        endScoreCanvas.enabled = false;
+        credits.SetActive(true);
     }
 
     public IEnumerator ShowScores()

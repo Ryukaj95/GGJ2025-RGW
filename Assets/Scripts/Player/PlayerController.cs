@@ -52,7 +52,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
 
     [SerializeField] public AudioClip deathSound;
 
-
+    [SerializeField] public AudioClip popSound;
 
     protected override void Awake()
     {
@@ -66,7 +66,6 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private void OnEnable()
     {
         spawnPosition = this.transform.position;
-        UIManager.Instance.SetPopProgress(0f);
         playerControls.Enable();
     }
 
@@ -78,6 +77,11 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     private void LateUpdate()
     {
         LimitPosition();
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.SetPopProgress(0f);
     }
 
     private void FixedUpdate()
@@ -225,6 +229,7 @@ public class PlayerController : Singleton<PlayerController>, DeathAnimation, Tak
     public IEnumerator PopAnimation()
     {
         isInvincible = true;
+        audioSource.PlayOneShot(popSound);
         StartCoroutine(ClearAnimator.Instance.ClearAnimation());
         popSpriteRender.sprite = popSprites[0];
         yield return new WaitForSeconds(0.5f);

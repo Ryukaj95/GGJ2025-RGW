@@ -317,8 +317,8 @@ MonoBehaviour:
     cooldown: 1
     radius: 1
     wait: 0
-  audioSource: {fileID: 0}
-  shootSound: {fileID: 0}
+  audioSource: {fileID: 3392556296823983197}
+  shootSound: {fileID: 8300000, guid: b1d9583e8ed8b4d49b2a422da243d2a4, type: 3}
   playerTrigger: 0
   active: 1
 --- !u!50 &6039632605127211355
